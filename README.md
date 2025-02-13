@@ -25,26 +25,26 @@
 ## 🚀 การติดตั้ง
 
 1. Clone โปรเจค:
-   \`\`\`bash
+   ```bash
    git clone https://github.com/TitleKung-01/ecommercce-mobile.git
-   \`\`\`
+   ```
 
 2. ติดตั้ง dependencies:
-   \`\`\`bash
+   ```bash
    cd ecommercce-mobile
    npm install
-   \`\`\`
+   ```
 
 3. สร้างไฟล์ .env และกำหนดค่า environment variables:
-   \`\`\`env
+   ```env
    VITE_SUPABASE_URL=your_supabase_url
    VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-   \`\`\`
+   ```
 
 4. รันโปรเจคในโหมด development:
-   \`\`\`bash
+   ```bash
    npm run dev
-   \`\`\`
+   ```
 
 ## 📱 หน้าจอหลัก
 
