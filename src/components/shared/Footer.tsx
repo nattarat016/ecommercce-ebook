@@ -3,69 +3,115 @@ import { Link } from "react-router-dom";
 import { socialLinks } from "../../constants/links";
 
 export const Footer = () => {
-	return (
-    <footer className="py-16 bg-gray-950 px-12 flex justify-between gap-10 text-slate-200 text-sm flex-wrap mt-10 md:flex-nowrap">
-			<Link
-        to="/"
-				className={`text-2xl font-bold tracking-tighter transition-all text-white flex-1`}
-			>
-				Celulares Baratos
-			</Link>
+  return (
+    <footer className="bg-gray-900">
+      {/* Main Footer */}
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
+          {/* Brand Section */}
+          <div className="space-y-4">
+            <Link to="/" className="text-2xl font-bold text-white">
+              MeowwwMobile
+            </Link>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              ร้านค้าโทรศัพท์มือถือออนไลน์ที่คุณไว้วางใจได้ พร้อมให้บริการตลอด
+              24 ชั่วโมง
+            </p>
+          </div>
 
-      <div className="flex flex-col gap-4 flex-1">
-        <p className="font-semibold uppercase tracking-tighter">
-          สมัครรับข่าวสาร
-				</p>
-        <p className="text-xs font-medium">รับโปรโมชั่นพิเศษ</p>
+          {/* Quick Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">เมนูลัด</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link
+                  to="/celulares"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  สินค้าทั้งหมด
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/nosotros"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  เกี่ยวกับเรา
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/orders"
+                  className="text-gray-400 hover:text-white transition-colors"
+                >
+                  ติดตามคำสั่งซื้อ
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        <div className="border border-gray-800 flex items-center gap-2 px-3 py-2 rounded-full">
-					<input
-            type="email"
-            placeholder="อีเมล"
-            className="pl-2 bg-gray-950 text-slate-200 w-full focus:outline-none"
-					/>
+          {/* Newsletter Section */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">รับข่าวสาร</h3>
+            <p className="text-gray-400 text-sm">
+              อัพเดทข่าวสารและโปรโมชั่นก่อนใคร
+            </p>
+            <div className="flex">
+              <input
+                type="email"
+                placeholder="อีเมลของคุณ"
+                className="flex-1 bg-gray-800 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              />
+              <button className="bg-indigo-600 text-white px-4 py-2 rounded-r-lg hover:bg-indigo-700 transition-colors">
+                <BiChevronRight size={20} />
+              </button>
+            </div>
+          </div>
 
-          <button className="text-slate-200">
-						<BiChevronRight size={20} />
-					</button>
-				</div>
-			</div>
+          {/* Social Links */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-semibold text-white">ติดตามเรา</h3>
+            <div className="flex gap-4">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="bg-gray-800 p-2 rounded-lg text-gray-400 hover:bg-indigo-600 hover:text-white transition-all duration-300"
+                >
+                  {link.icon}
+                </a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <div className="flex flex-col gap-4 flex-1">
-        <p className="font-semibold uppercase tracking-tighter">นโยบาย</p>
-
-        <nav className="flex flex-col gap-2 text-xs font-medium">
-          <Link to="/celulares">สินค้า</Link>
-          <Link to="#" className="text-slate-300 hover:text-white">
-            นโยบายความเป็นส่วนตัว
-					</Link>
-          <Link to="#" className="text-slate-300 hover:text-white">
-            ข้อกำหนดการใช้งาน
-					</Link>
-				</nav>
-			</div>
-
-      <div className="flex flex-col gap-4 flex-1">
-        <p className="font-semibold uppercase tracking-tighter">ติดตามเรา</p>
-
-        <p className="text-xs leading-6">
-          อย่าพลาดข่าวสารและสิ่งใหม่ๆ ที่ CelularesBaratos มีให้คุณ
-				</p>
-
-        <div className="flex">
-          {socialLinks.map((link) => (
-						<a
-							key={link.id}
-							href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="text-slate-300 border border-gray-8000 w-full h-full py-3.5 flex items-center justify-center transition-all hover:bg-white hover:text-gray-950"
-						>
-							{link.icon}
-						</a>
-					))}
-				</div>
-			</div>
-		</footer>
-	);
+      {/* Bottom Bar */}
+      <div className="border-t border-gray-800">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-gray-400 text-sm">
+              © {new Date().getFullYear()} MeowwwMobile. All rights reserved.
+            </p>
+            <div className="flex gap-6">
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                นโยบายความเป็นส่วนตัว
+              </Link>
+              <Link
+                to="#"
+                className="text-gray-400 hover:text-white text-sm transition-colors"
+              >
+                ข้อกำหนดการใช้งาน
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
 };

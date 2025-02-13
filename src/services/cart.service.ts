@@ -2,75 +2,189 @@ import { supabase } from '../lib/supabase';
 
 export interface CartItem {
     id: string;
+    cart_id: string;
     product_id: string;
-    user_id: string;
-    quantity: number;
     variant_id: string;
-    product?: any; // จะถูก join กับข้อมูลสินค้า
+    quantity: number;
+    created_at?: string;
+    updated_at?: string;
+    // Join fields
+    product?: {
+        id: string;
+        name: string;
+        images: string[];
+        price: number;
+    };
+    variant?: {
+        id: string;
+        color: string;
+        color_name: string;
+        storage: string;
+        price: number;
+        stock: number;
+    };
 }
 
 export const cartService = {
-    // ดึงรายการสินค้าในตะกร้า
-    getCartItems: async (userId: string) => {
+    getOrCreateCart: async (userId: string): Promise<string> => {
+        try {
+            const { data: existingCart, error: fetchError } = await supabase
+                .from('carts')
+                .select('id')
+                .eq('user_id', userId)
+                .eq('status', 'active')
+                .single();
+
+            if (fetchError && fetchError.code !== 'PGRST116') {
+                throw fetchError;
+            }
+
+            if (existingCart) {
+                return existingCart.id;
+            }
+
+            const { data: newCart, error: createError } = await supabase
+                .from('carts')
+                .insert({
+                    user_id: userId,
+                    status: 'active'
+                })
+                .select('id')
+                .single();
+
+            if (createError) throw createError;
+            if (!newCart) throw new Error('Failed to create cart');
+
+            return newCart.id;
+        } catch (error) {
+            console.error('Error in getOrCreateCart:', error);
+            throw error;
+        }
+    },
+
+    getCartItems: async (userId: string): Promise<CartItem[]> => {
+        const cartId = await cartService.getOrCreateCart(userId);
+
         const { data, error } = await supabase
-            .from('carts')
+            .from('cart_items')
             .select(`
-        *,
-        product:products(*)
-      `)
-            .eq('user_id', userId);
+                *,
+                product:products (
+                    id,
+                    name,
+                    images,
+                    price
+                ),
+                variant:product_variants (
+                    id,
+                    color,
+                    color_name,
+                    storage,
+                    price,
+                    stock
+                )
+            `)
+            .eq('cart_id', cartId);
 
         if (error) throw error;
-        return data as CartItem[];
+        return data || [];
     },
 
-    // เพิ่มสินค้าลงตะกร้า
-    addToCart: async (userId: string, productId: string, variantId: string, quantity: number = 1) => {
-        const { data, error } = await supabase
-            .from('carts')
-            .upsert({
-                user_id: userId,
-                product_id: productId,
-                variant_id: variantId,
-                quantity: quantity
-            }, {
-                onConflict: 'user_id,product_id,variant_id'
+    addToCart: async (userId: string, productId: string, variantId: string, quantity: number): Promise<void> => {
+        try {
+            const cartId = await cartService.getOrCreateCart(userId);
+
+            const { data: existingItem } = await supabase
+                .from('cart_items')
+                .select('*')
+                .eq('cart_id', cartId)
+                .eq('product_id', productId)
+                .eq('variant_id', variantId)
+                .single();
+
+            if (existingItem) {
+                const { error } = await supabase
+                    .from('cart_items')
+                    .update({
+                        quantity: existingItem.quantity + quantity,
+                        updated_at: new Date().toISOString()
+                    })
+                    .eq('id', existingItem.id);
+
+                if (error) throw error;
+            } else {
+                const { error } = await supabase
+                    .from('cart_items')
+                    .insert({
+                        cart_id: cartId,
+                        product_id: productId,
+                        variant_id: variantId,
+                        quantity
+                    });
+
+                if (error) throw error;
+            }
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            throw error;
+        }
+    },
+
+    updateCartItemQuantity: async (itemId: string, quantity: number): Promise<void> => {
+        const { error } = await supabase
+            .from('cart_items')
+            .update({
+                quantity,
+                updated_at: new Date().toISOString()
             })
-            .select();
+            .eq('id', itemId);
 
         if (error) throw error;
-        return data;
     },
 
-    // อัพเดทจำนวนสินค้าในตะกร้า
-    updateQuantity: async (cartId: string, quantity: number) => {
-        const { data, error } = await supabase
-            .from('carts')
-            .update({ quantity })
-            .eq('id', cartId)
-            .select();
-
-        if (error) throw error;
-        return data;
-    },
-
-    // ลบสินค้าออกจากตะกร้า
-    removeFromCart: async (cartId: string) => {
+    removeFromCart: async (itemId: string): Promise<void> => {
         const { error } = await supabase
-            .from('carts')
+            .from('cart_items')
             .delete()
-            .eq('id', cartId);
+            .eq('id', itemId);
 
         if (error) throw error;
     },
 
-    // ล้างตะกร้าทั้งหมด
-    clearCart: async (userId: string) => {
+    clearCart: async (userId: string): Promise<void> => {
+        const cartId = await cartService.getOrCreateCart(userId);
         const { error } = await supabase
-            .from('carts')
+            .from('cart_items')
             .delete()
+            .eq('cart_id', cartId);
+
+        if (error) throw error;
+    },
+
+    getCartItemCount: async (userId: string): Promise<number> => {
+        const { count, error } = await supabase
+            .from('cart_items')
+            .select('*', { count: 'exact', head: true })
             .eq('user_id', userId);
 
         if (error) throw error;
+        return count || 0;
+    },
+
+    getCartTotal: async (userId: string): Promise<number> => {
+        const { data, error } = await supabase
+            .from('cart_items')
+            .select(`
+                quantity,
+                variant:product_variants (price)
+            `)
+            .eq('user_id', userId);
+
+        if (error) throw error;
+
+        return data.reduce((total, item) => {
+            const price = item.variant?.[0]?.price || 0;
+            return total + (item.quantity * price);
+        }, 0);
     }
 }; 

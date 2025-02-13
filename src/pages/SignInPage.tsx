@@ -23,21 +23,15 @@ export const SignInPage = () => {
         throw new Error("กรุณากรอกอีเมลและรหัสผ่าน");
       }
 
-      const { user, error: signInError } = await authService.signIn(
-        email,
-        password
-      );
-
-      if (signInError) {
-        if (signInError.message.includes("Invalid login credentials")) {
-          throw new Error("อีเมลหรือรหัสผ่านไม่ถูกต้อง");
-        } else {
-          throw new Error(signInError.message);
-        }
-      }
+      const { user, isAdmin } = await authService.signIn(email, password);
 
       if (user) {
-        navigate("/");
+        // ถ้าเป็น admin ให้ redirect ไปหน้า admin
+        if (isAdmin) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (err: any) {
       console.error("Sign in error:", err);

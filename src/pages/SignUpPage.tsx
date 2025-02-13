@@ -16,7 +16,6 @@ export const SignUpPage = () => {
     setLoading(true);
 
     try {
-      // ตรวจสอบข้อมูลที่กรอก
       if (!email || !password || !confirmPassword) {
         throw new Error("กรุณากรอกข้อมูลให้ครบถ้วน");
       }
@@ -29,22 +28,10 @@ export const SignUpPage = () => {
         throw new Error("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร");
       }
 
-      // สมัครสมาชิก
-      const { user, error: signUpError } = await authService.signUp(
-        email,
-        password
-      );
-
-      if (signUpError) {
-        if (signUpError.message.includes("Email already registered")) {
-          throw new Error("อีเมลนี้ถูกใช้งานแล้ว");
-        } else {
-          throw new Error(signUpError.message);
-        }
-      }
+      // สมัครสมาชิก (ส่ง fullName เป็นค่าว่างไปก่อน)
+      const { user } = await authService.signUp(email, password, "");
 
       if (user) {
-        // ลงทะเบียนสำเร็จ
         navigate("/signin", {
           state: {
             message: "ลงทะเบียนสำเร็จ กรุณายืนยันอีเมลของคุณก่อนเข้าสู่ระบบ",

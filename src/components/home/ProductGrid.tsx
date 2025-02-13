@@ -1,31 +1,43 @@
-import { PreparedProducts } from "../../interfaces";
+import { Product } from "../../interfaces";
 import { CardProduct } from "../products/CardProduct";
 
-interface Props {
-	title: string;
-	products: PreparedProducts[];
+interface ProductGridProps {
+  title: string;
+  products: Product[];
 }
 
-export const ProductGrid = ({ title, products }: Props) => {
-	return (
-    <div className="my-32">
-      <h2 className="text-3xl font-semibold text-center mb-8 md:text-4xl lg:text-5xl">
-				{title}
-			</h2>
+export const ProductGrid = ({ title, products }: ProductGridProps) => {
+  return (
+    <div className="container mx-auto px-4 py-12">
+      <div className="space-y-8">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
+            {title}
+          </h2>
+          <div className="mt-4 mx-auto w-24 h-1 bg-indigo-600 rounded-full"></div>
+        </div>
 
-      <div className="grid grid-cols-1 gap-4 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
-        {products.map((product) => (
-					<CardProduct
-						key={product.id}
-						name={product.name}
-						price={product.price}
-						colors={product.colors}
-						img={product.images[0]}
-						slug={product.slug}
-						variants={product.variants}
-					/>
-				))}
-			</div>
-		</div>
-	);
+        <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
+          {products.map((product) => (
+            <div
+              key={product.id}
+              className="group transform hover:-translate-y-1 transition-all duration-300"
+            >
+              <CardProduct
+                img={product.images?.[0] || "https://via.placeholder.com/400"}
+                name={product.name}
+                price={product.price}
+                slug={product.slug}
+                variants={product.variants || []}
+                colors={(product.colors || []).map((color) => ({
+                  name: color.color_name,
+                  color: color.color,
+                }))}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };

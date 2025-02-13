@@ -26,6 +26,7 @@ export const Navbar = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -34,16 +35,20 @@ export const Navbar = () => {
       if (currentUser) {
         const cartItems = await cartService.getCartItems(currentUser.id);
         setCartCount(cartItems.length);
+        const adminStatus = await authService.isAdmin(currentUser.id);
+        setIsAdmin(adminStatus);
       }
     };
     checkAuth();
 
     const { data: authListener } = authService.onAuthStateChange(
-      async (user) => {
-        setUser(user);
-        if (user) {
-          const cartItems = await cartService.getCartItems(user.id);
+      async (_event, session) => {
+        setUser(session?.user);
+        if (session?.user) {
+          const cartItems = await cartService.getCartItems(session.user.id);
           setCartCount(cartItems.length);
+          const adminStatus = await authService.isAdmin(session.user.id);
+          setIsAdmin(adminStatus);
         } else {
           setCartCount(0);
         }
@@ -83,10 +88,6 @@ export const Navbar = () => {
     } catch (error) {
       console.error("Error signing out:", error);
     }
-  };
-
-  const getInitials = (email: string) => {
-    return email.split("@")[0].slice(0, 2).toUpperCase();
   };
 
   const getNavIcon = (title: string) => {
@@ -132,6 +133,14 @@ export const Navbar = () => {
                   <span className="ml-2">{link.title}</span>
                 </NavLink>
               ))}
+              {isAdmin && (
+                <NavLink
+                  to="/admin"
+                  className="inline-flex items-center px-3 py-1 text-sm font-medium transition-all duration-200 text-indigo-600 hover:text-indigo-800"
+                >
+                  <span className="ml-2">แดชบอร์ด</span>
+                </NavLink>
+              )}
             </div>
           </div>
 
@@ -175,34 +184,26 @@ export const Navbar = () => {
               <div className="relative" ref={profileMenuRef}>
                 <button
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                  className="flex items-center space-x-2 focus:outline-none group"
+                  className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <div className="w-9 h-9 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 p-[2px] group-hover:from-indigo-600 group-hover:to-purple-700 transition-all">
-                    <div className="w-full h-full rounded-full bg-white flex items-center justify-center">
-                      <span className="text-sm font-medium bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent">
-                        {getInitials(user.email)}
-                      </span>
-                    </div>
+                  <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white">
+                    {user.email[0].toUpperCase()}
                   </div>
                   <BiChevronDown
-                    className={`h-5 w-5 text-gray-400 transition-transform duration-200 group-hover:text-indigo-600 ${
+                    className={`w-5 h-5 transition-transform ${
                       isProfileMenuOpen ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
                 {isProfileMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-56 rounded-lg shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 transform transition-all">
-                    <div className="px-4 py-3 text-sm text-gray-700 border-b border-gray-100">
-                      <p className="font-medium text-gray-900">บัญชีผู้ใช้</p>
-                      <p className="truncate">{user.email}</p>
-                    </div>
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
                     <Link
                       to="/profile"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-all"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
-                      <BiUserCircle className="w-5 h-5 mr-3" />
+                      <BiUserCircle className="w-5 h-5 mr-2" />
                       โปรไฟล์
                     </Link>
                     <Link
@@ -269,6 +270,15 @@ export const Navbar = () => {
                 <span className="ml-3">{link.title}</span>
               </NavLink>
             ))}
+            {isAdmin && (
+              <NavLink
+                to="/admin"
+                className="flex items-center px-4 py-2 text-base font-medium transition-all text-indigo-600 hover:text-indigo-800"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <span className="ml-3">แดชบอร์ด</span>
+              </NavLink>
+            )}
           </div>
         </div>
       )}

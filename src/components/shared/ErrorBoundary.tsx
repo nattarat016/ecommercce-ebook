@@ -10,6 +10,7 @@ export const ErrorBoundary = () => {
 
   let errorMessage = "เกิดข้อผิดพลาดที่ไม่คาดคิด";
   let errorTitle = "เกิดข้อผิดพลาด";
+  let errorDetail = "";
 
   if (isRouteErrorResponse(error)) {
     if (error.status === 404) {
@@ -22,16 +23,25 @@ export const ErrorBoundary = () => {
       errorTitle = "ระบบไม่พร้อมใช้งาน";
       errorMessage = "ขออภัย ระบบอยู่ระหว่างการปรับปรุง กรุณาลองใหม่ภายหลัง";
     }
+    errorDetail = error.statusText;
   } else if (error instanceof Error) {
     errorMessage = error.message;
+    errorDetail = error.stack || "";
+  } else if (typeof error === "object" && error !== null) {
+    errorMessage = JSON.stringify(error, null, 2);
   }
 
   return (
     <div className="min-h-[50vh] flex items-center justify-center px-4 sm:px-6 lg:px-8">
-      <div className="text-center space-y-6 max-w-md w-full">
+      <div className="text-center space-y-6 max-w-2xl w-full">
         <div className="space-y-2">
           <h1 className="text-4xl font-bold text-gray-900">{errorTitle}</h1>
           <p className="text-lg text-gray-600">{errorMessage}</p>
+          {process.env.NODE_ENV === "development" && errorDetail && (
+            <pre className="mt-4 p-4 bg-gray-100 rounded-lg text-left text-sm overflow-auto max-h-64">
+              {errorDetail}
+            </pre>
+          )}
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">

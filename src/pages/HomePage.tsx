@@ -5,64 +5,44 @@ import { ProductGrid } from "../components/home/ProductGrid";
 import { Product } from "../interfaces";
 import { productService } from "../services/product.service";
 
-const prepareProductsForGrid = (products: Product[]) => {
-  return products.map((product) => ({
-    ...product,
-    colors: product.colors.map((color) => ({
-      name: color.color_name,
-      color: color.color,
-    })),
-  }));
-};
-
 export const HomePage = () => {
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
   const [popularProducts, setPopularProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
         const [recent, popular] = await Promise.all([
           productService.getRecentProducts(),
           productService.getPopularProducts(),
         ]);
-
         setRecentProducts(recent);
         setPopularProducts(popular);
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error loading products:", error);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
-    fetchProducts();
+    loadProducts();
   }, []);
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        กำลังโหลด...
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-600"></div>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="bg-white">
       <FeatureGrid />
-
-      <ProductGrid
-        title="สินค้าใหม่"
-        products={prepareProductsForGrid(recentProducts)}
-      />
-
-      <ProductGrid
-        title="สินค้าแนะนำ"
-        products={prepareProductsForGrid(popularProducts)}
-      />
-
+      <ProductGrid title="สินค้ามาใหม่" products={recentProducts} />
       <Brands />
+      <ProductGrid title="สินค้ายอดนิยม" products={popularProducts} />
     </div>
   );
 };

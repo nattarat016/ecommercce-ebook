@@ -61,13 +61,13 @@ export const CellPhonesPage = () => {
                 key={product.id}
                 name={product.name}
                 price={product.price}
-                colors={product.colors.map((color) => ({
+                colors={(product.colors || []).map((color) => ({
                   name: color.color_name,
                   color: color.color,
                 }))}
-                img={product.images[0]}
+                img={product.images?.[0] || ""}
                 slug={product.slug}
-                variants={product.variants}
+                variants={product.variants || []}
               />
             ))}
           </div>
