@@ -70,13 +70,10 @@
 4. Push ไปยัง branch (\`git push origin feature/amazing-feature\`)
 5. เปิด Pull Request
 
-## 📝 License
-
-โปรเจคนี้อยู่ภายใต้ MIT License - ดูรายละเอียดเพิ่มเติมได้ที่ [LICENSE](LICENSE)
 
 ## 👥 ผู้พัฒนา
 
-- 👨‍💻 MeowwwMu - [GitHub](https://github.com/TitleKung-01)
+- 👨‍💻 TitleKung - [GitHub](https://github.com/TitleKung-01)
 
 ---
 
