@@ -69,7 +69,7 @@ export default function CartPage() {
         <div className="text-center py-12">
           <p className="text-lg text-gray-500">ไม่มีสินค้าในตะกร้า</p>
           <button
-            onClick={() => navigate("/products")}
+            onClick={() => navigate("/celulares")}
             className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
           >
             เลือกซื้อสินค้า
@@ -181,7 +181,7 @@ export default function CartPage() {
                 หรือ{" "}
                 <button
                   type="button"
-                  onClick={() => navigate("/products")}
+                  onClick={() => navigate("/celulares")}
                   className="text-indigo-600 font-medium hover:text-indigo-500"
                 >
                   เลือกซื้อสินค้าต่อ<span aria-hidden="true"> &rarr;</span>
