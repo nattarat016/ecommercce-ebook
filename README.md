@@ -1,50 +1,83 @@
-# React + TypeScript + Vite
+# 📱 MeowwwMobile - E-commerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+เว็บแอปพลิเคชันสำหรับขายโทรศัพท์มือถือ พัฒนาด้วยเทคโนโลยีทันสมัย ใช้งานง่าย และมีฟีเจอร์ครบครัน
 
-Currently, two official plugins are available:
+## ✨ คุณสมบัติหลัก
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🛍️ แสดงรายการสินค้าพร้อมการค้นหาและกรอง
+- 🎨 เลือกสีและความจุของสินค้าได้
+- 🛒 ระบบตะกร้าสินค้า
+- 💳 ระบบชำระเงิน
+- 👤 ระบบสมาชิก (ลงทะเบียน/เข้าสู่ระบบ)
+- 📦 ติดตามสถานะคำสั่งซื้อ
+- 👨‍💼 ระบบจัดการสำหรับผู้ดูแล
 
-## Expanding the ESLint configuration
+## 🛠️ เทคโนโลยีที่ใช้
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- ⚛️ React + TypeScript
+- 🎨 Tailwind CSS
+- 🔥 Supabase (Authentication & Database)
+- 📦 Vite (Build Tool)
+- 🎯 React Router DOM
+- 🍞 React Hot Toast
+- 📊 React Icons
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 การติดตั้ง
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+1. Clone โปรเจค:
+   \`\`\`bash
+   git clone https://github.com/yourusername/ecommercce-mobile.git
+   \`\`\`
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+2. ติดตั้ง dependencies:
+   \`\`\`bash
+   cd ecommercce-mobile
+   npm install
+   \`\`\`
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+3. สร้างไฟล์ .env และกำหนดค่า environment variables:
+   \`\`\`env
+   VITE_SUPABASE_URL=your_supabase_url
+   VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+   \`\`\`
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+4. รันโปรเจคในโหมด development:
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+
+## 📱 หน้าจอหลัก
+
+- 🏠 หน้าแรก: แสดงสินค้ามาใหม่และยอดนิยม
+- 📱 รายการสินค้า: แสดงสินค้าทั้งหมดพร้อมตัวกรอง
+- 🛒 ตะกร้าสินค้า: จัดการสินค้าที่เลือก
+- 👤 โปรไฟล์: จัดการข้อมูลส่วนตัว
+- 📦 ประวัติการสั่งซื้อ: ดูรายการและสถานะคำสั่งซื้อ
+
+## 👨‍💼 ระบบผู้ดูแล
+
+- 📊 แดชบอร์ด: ภาพรวมของระบบ
+- 📦 จัดการสินค้า: เพิ่ม/แก้ไข/ลบสินค้า
+- 🛍️ จัดการคำสั่งซื้อ: อัพเดทสถานะและจัดการคำสั่งซื้อ
+
+## 🤝 การมีส่วนร่วม
+
+หากคุณต้องการมีส่วนร่วมในการพัฒนา:
+
+1. Fork โปรเจค
+2. สร้าง branch ใหม่ (\`git checkout -b feature/amazing-feature\`)
+3. Commit การเปลี่ยนแปลง (\`git commit -m 'Add some amazing feature'\`)
+4. Push ไปยัง branch (\`git push origin feature/amazing-feature\`)
+5. เปิด Pull Request
+
+## 📝 License
+
+โปรเจคนี้อยู่ภายใต้ MIT License - ดูรายละเอียดเพิ่มเติมได้ที่ [LICENSE](LICENSE)
+
+## 👥 ผู้พัฒนา
+
+- 👨‍💻 MeowwwMu - [GitHub](https://github.com/TitleKung-01)
+
+---
+
+⭐️ หากคุณชอบโปรเจคนี้ อย่าลืมกด Star ให้กำลังใจด้วยนะครับ!

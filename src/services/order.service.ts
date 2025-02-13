@@ -1,4 +1,4 @@
-import { supabase, handleSupabaseError } from '../lib/supabase';
+import { supabase } from '../lib/supabase';
 import { Order, OrderStatus } from '../types/models';
 import { CartItem } from './cart.service';
 import { cartService } from './cart.service';
@@ -34,7 +34,7 @@ class OrderService {
             .select()
             .single();
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
 
         // Create order items
         const orderItems = input.items.map(item => ({
@@ -49,7 +49,7 @@ class OrderService {
             .from('order_items')
             .insert(orderItems);
 
-        if (itemsError) handleSupabaseError(itemsError);
+        if (itemsError) throw itemsError;
 
         return data!;
     }
@@ -69,7 +69,7 @@ class OrderService {
             .eq('user_id', userId)
             .order('created_at', { ascending: false });
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
         return data || [];
     }
 
@@ -87,7 +87,7 @@ class OrderService {
             .eq('id', orderId)
             .single();
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
         return data;
     }
 
@@ -101,7 +101,7 @@ class OrderService {
             })
             .eq('id', orderId);
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
     }
 
     // Get all orders (admin)
@@ -139,7 +139,7 @@ class OrderService {
             .eq('status', status)
             .order('created_at', { ascending: false });
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
         return data || [];
     }
 
@@ -150,7 +150,7 @@ class OrderService {
             .delete()
             .eq('id', orderId);
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
     }
 
     // Search orders
@@ -167,7 +167,7 @@ class OrderService {
             .or(`shipping_address->fullName.ilike.%${query}%,id.eq.${query}`)
             .order('created_at', { ascending: false });
 
-        if (error) handleSupabaseError(error);
+        if (error) throw error;
         return data || [];
     }
 
