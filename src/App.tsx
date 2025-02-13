@@ -7,18 +7,19 @@ import { HomePage, AboutPage, CellPhonesPage } from "./pages";
 import { AdminOrdersPage } from "./pages/admin/AdminOrdersPage";
 import AdminProductsPage from "./pages/admin/AdminProductsPage";
 import ProductFormPage from "./pages/admin/ProductFormPage";
-import CartPage from "./pages/CartPage";
+import { CartPage } from "./pages/CartPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { OrdersPage } from "./pages/OrdersPage";
 import { OrderSuccessPage } from "./pages/OrderSuccessPage";
-import ProductDetailPage from "./pages/ProductDetailPage";
+import { ProductDetailPage } from "./pages/ProductDetailPage";
 import { SignInPage } from "./pages/SignInPage";
 import { SignUpPage } from "./pages/SignUpPage";
-
+import { ToastProvider } from "./components/providers/ToastProvider";
 
 function App() {
   return (
     <BrowserRouter>
+      <ToastProvider />
       <div className="min-h-screen flex flex-col bg-gray-50">
         <Navbar />
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">

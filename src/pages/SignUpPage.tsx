@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth.service";
+import { showToast } from "../utils/toast";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -17,30 +18,37 @@ export const SignUpPage = () => {
 
     try {
       if (!email || !password || !confirmPassword) {
-        throw new Error("กรุณากรอกข้อมูลให้ครบถ้วน");
+        setError("กรุณากรอกข้อมูลให้ครบถ้วน");
+        showToast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
+        return;
       }
 
       if (password !== confirmPassword) {
-        throw new Error("รหัสผ่านไม่ตรงกัน");
+        setError("รหัสผ่านไม่ตรงกัน");
+        showToast.error("รหัสผ่านไม่ตรงกัน");
+        return;
       }
 
       if (password.length < 6) {
-        throw new Error("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร");
+        setError("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร");
+        showToast.error("รหัสผ่านต้องมีความยาวอย่างน้อย 6 ตัวอักษร");
+        return;
       }
 
-      // สมัครสมาชิก (ส่ง fullName เป็นค่าว่างไปก่อน)
       const { user } = await authService.signUp(email, password, "");
 
       if (user) {
+        showToast.success("ลงทะเบียนสำเร็จ");
         navigate("/signin", {
           state: {
-            message: "ลงทะเบียนสำเร็จ กรุณายืนยันอีเมลของคุณก่อนเข้าสู่ระบบ",
+            message: "ลงทะเบียนสำเร็จ",
           },
         });
       }
     } catch (err: any) {
       console.error("Sign up error:", err);
       setError(err.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
+      showToast.error("เกิดข้อผิดพลาดในการสมัครสมาชิก");
     } finally {
       setLoading(false);
     }

@@ -16,6 +16,7 @@ import {
 } from "react-icons/bi";
 import { authService } from "../../services/auth.service";
 import { cartService } from "../../services/cart.service";
+import { showToast } from "../../utils/toast";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -28,15 +29,28 @@ export const Navbar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
+  const updateCartCount = async (userId?: string) => {
+    if (userId) {
+      // ถ้าล็อกอิน ดึงจำนวนสินค้าจาก server
+      const cartItems = await cartService.getCartItems(userId);
+      setCartCount(cartItems.length);
+    } else {
+      // ถ้าไม่ล็อกอิน ดึงจำนวนสินค้าจาก local storage
+      const localItems = localStorage.getItem("cartItems");
+      setCartCount(localItems ? JSON.parse(localItems).length : 0);
+    }
+  };
+
   useEffect(() => {
     const checkAuth = async () => {
       const currentUser = await authService.getCurrentUser();
       setUser(currentUser);
       if (currentUser) {
-        const cartItems = await cartService.getCartItems(currentUser.id);
-        setCartCount(cartItems.length);
+        updateCartCount(currentUser.id);
         const adminStatus = await authService.isAdmin(currentUser.id);
         setIsAdmin(adminStatus);
+      } else {
+        updateCartCount();
       }
     };
     checkAuth();
@@ -45,15 +59,24 @@ export const Navbar = () => {
       async (_event, session) => {
         setUser(session?.user);
         if (session?.user) {
-          const cartItems = await cartService.getCartItems(session.user.id);
-          setCartCount(cartItems.length);
+          updateCartCount(session.user.id);
           const adminStatus = await authService.isAdmin(session.user.id);
           setIsAdmin(adminStatus);
         } else {
-          setCartCount(0);
+          updateCartCount();
         }
       }
     );
+
+    // ตรวจสอบการเปลี่ยนแปลงของ local cart
+    const checkLocalCart = () => {
+      if (!user) {
+        updateCartCount();
+      }
+    };
+
+    // เพิ่ม event listener สำหรับ storage changes
+    window.addEventListener("storage", checkLocalCart);
 
     // ปิดเมนูเมื่อคลิกนอกเมนู
     const handleClickOutside = (event: MouseEvent) => {
@@ -78,15 +101,18 @@ export const Navbar = () => {
         authListener.subscription.unsubscribe();
       }
       document.removeEventListener("mousedown", handleClickOutside);
+      window.removeEventListener("storage", checkLocalCart);
     };
-  }, []);
+  }, [user]);
 
   const handleSignOut = async () => {
     try {
       await authService.signOut();
+      showToast.success("ออกจากระบบสำเร็จ");
       navigate("/");
     } catch (error) {
       console.error("Error signing out:", error);
+      showToast.error("เกิดข้อผิดพลาดในการออกจากระบบ");
     }
   };
 

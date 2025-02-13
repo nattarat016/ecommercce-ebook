@@ -260,7 +260,7 @@ export const CheckoutPage = () => {
                     <div className="flex-1">
                       <h3 className="font-medium">{item.product?.name}</h3>
                       <p className="text-sm text-gray-500">
-                        {item.variant?.storage} - {item.variant?.color}
+                        {item.variant?.storage} - {item.variant?.color_name}
                       </p>
                       <p className="text-sm">
                         ฿{item.variant?.price.toLocaleString()} x {item.quantity}

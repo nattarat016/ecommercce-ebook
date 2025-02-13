@@ -4,82 +4,94 @@ import { Product } from '../interfaces';
 export const productService = {
     // ดึงข้อมูลสินค้าทั้งหมด
     getAllProducts: async (): Promise<Product[]> => {
-        const { data, error } = await supabase
-            .from('products')
-            .select(`
-                *,
-                variants:product_variants(
-                    id,
-                    stock,
-                    price,
-                    storage,
-                    color,
-                    color_name
-                )
-            `);
+        try {
+            const { data, error } = await supabase
+                .from('products')
+                .select(`
+                    *,
+                    variants:product_variants (
+                        id,
+                        color,
+                        color_name,
+                        storage,
+                        price,
+                        stock
+                    )
+                `)
+                .order('created_at', { ascending: false });
 
-        if (error) {
+            if (error) {
+                console.error('Error fetching all products:', error);
+                throw error;
+            }
+
+            return data || [];
+        } catch (error) {
+            console.error('Error in getAllProducts:', error);
             throw error;
         }
-
-        return data || [];
     },
 
     // ดึงข้อมูลสินค้าล่าสุด
-    getRecentProducts: async (limit: number = 4): Promise<Product[]> => {
-        const { data, error } = await supabase
-            .from('products')
-            .select(`
-                *,
-                variants:product_variants(
-                    id,
-                    stock,
-                    price,
-                    storage,
-                    color,
-                    color_name
-                )
-            `)
-            .order('created_at', { ascending: false })
-            .limit(limit);
+    getRecentProducts: async (limit: number = 8): Promise<Product[]> => {
+        try {
+            const { data, error } = await supabase
+                .from('products')
+                .select(`
+                    *,
+                    variants:product_variants (
+                        id,
+                        color,
+                        color_name,
+                        storage,
+                        price,
+                        stock
+                    )
+                `)
+                .order('created_at', { ascending: false })
+                .limit(limit);
 
-        if (error) {
+            if (error) {
+                console.error('Error fetching recent products:', error);
+                throw error;
+            }
+
+            return data || [];
+        } catch (error) {
+            console.error('Error in getRecentProducts:', error);
             throw error;
         }
-
-        return data || [];
     },
 
     // ดึงข้อมูลสินค้ายอดนิยม
-    getPopularProducts: async (limit: number = 4): Promise<Product[]> => {
-        const { data, error } = await supabase
-            .from('products')
-            .select(`
-                *,
-                variants:product_variants(
-                    id,
-                    stock,
-                    price,
-                    storage,
-                    color,
-                    color_name
-                )
-            `)
-            .order('popularity_score', { ascending: false })
-            .limit(limit);
+    getPopularProducts: async (limit: number = 8): Promise<Product[]> => {
+        try {
+            const { data, error } = await supabase
+                .from('products')
+                .select(`
+                    *,
+                    variants:product_variants (
+                        id,
+                        color,
+                        color_name,
+                        storage,
+                        price,
+                        stock
+                    )
+                `)
+                .order('view_count', { ascending: false })
+                .limit(limit);
 
-        if (error) {
+            if (error) {
+                console.error('Error fetching popular products:', error);
+                throw error;
+            }
+
+            return data || [];
+        } catch (error) {
+            console.error('Error in getPopularProducts:', error);
             throw error;
         }
-
-        // คำนวณ popularity score จาก view_count และ purchase_count
-        const productsWithScore = data?.map(product => ({
-            ...product,
-            popularity_score: (product.view_count || 0) + ((product.purchase_count || 0) * 5)
-        })) || [];
-
-        // เรียงลำดับตาม popularity score จากมากไปน้อย
-        return productsWithScore.sort((a, b) => b.popularity_score - a.popularity_score);
     },
 
     // ดึงข้อมูลสินค้าตาม slug

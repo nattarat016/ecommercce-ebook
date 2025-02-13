@@ -5,6 +5,8 @@ import { formatPrice } from "../../helpers";
 import { Link } from "react-router-dom";
 import { Order, OrderStatus } from "../../interfaces";
 import { supabase } from "../../lib/supabase";
+import toast, { Toaster } from "react-hot-toast";
+import { getStatusText } from "../../utils/orderStatus";
 
 interface DashboardStats {
   totalOrders: number;
@@ -78,16 +80,25 @@ export const DashboardPage = () => {
     orderId: string,
     newStatus: Order["status"]
   ) => {
-    try {
-      setLoading(true);
-      await orderService.updateOrderStatus(orderId, newStatus);
-      await loadDashboardData();
-    } catch (error) {
-      console.error("Error updating order status:", error);
-      // TODO: Add toast notification for error
-    } finally {
-      setLoading(false);
-    }
+    const updatePromise = (async () => {
+      try {
+        setLoading(true);
+        await orderService.updateOrderStatus(orderId, newStatus);
+        await loadDashboardData();
+        return `อัพเดทสถานะเป็น${getStatusText(newStatus)}เรียบร้อยแล้ว`;
+      } catch (error) {
+        console.error("Error updating order status:", error);
+        throw new Error("เกิดข้อผิดพลาดในการอัพเดทสถานะ");
+      } finally {
+        setLoading(false);
+      }
+    })();
+
+    toast.promise(updatePromise, {
+      loading: "กำลังอัพเดทสถานะ...",
+      success: (message: string) => message,
+      error: (err: Error) => err.message,
+    });
   };
 
   if (loading)
@@ -101,6 +112,7 @@ export const DashboardPage = () => {
 
   return (
     <div className="space-y-6">
+      <Toaster position="top-right" />
       <h1 className="text-2xl font-semibold">แดชบอร์ด</h1>
 
       {/* Stats Grid */}

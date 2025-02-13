@@ -6,6 +6,7 @@ import { getStatusColor, getStatusText } from "../../utils/orderStatus";
 import { BiSearch, BiFilterAlt, BiTrash } from "react-icons/bi";
 import { supabase } from "../../lib/supabase";
 import { useNavigate } from "react-router-dom";
+import { showToast } from "../../utils/toast";
 
 // Constants
 const statusOptions: SelectOption[] = Object.values(OrderStatus).map(
@@ -28,6 +29,7 @@ export const AdminOrdersPage = () => {
         // Check if Supabase is initialized
         if (!supabase) {
           console.error("Supabase client not initialized");
+          showToast.error("ไม่สามารถเชื่อมต่อกับระบบได้");
           navigate("/");
           return;
         }
@@ -38,11 +40,13 @@ export const AdminOrdersPage = () => {
         } = await supabase.auth.getUser();
         if (authError) {
           console.error("Auth error:", authError);
+          showToast.error("กรุณาเข้าสู่ระบบก่อน");
           navigate("/signin");
           return;
         }
 
         if (!user) {
+          showToast.error("กรุณาเข้าสู่ระบบก่อน");
           navigate("/signin");
           return;
         }
@@ -55,11 +59,13 @@ export const AdminOrdersPage = () => {
 
         if (profileError) {
           console.error("Profile error:", profileError);
+          showToast.error("ไม่พบข้อมูลผู้ใช้");
           navigate("/");
           return;
         }
 
         if (!profile?.is_admin) {
+          showToast.error("คุณไม่มีสิทธิ์เข้าถึงหน้านี้");
           navigate("/");
           return;
         }
@@ -67,6 +73,7 @@ export const AdminOrdersPage = () => {
         setIsAdmin(true);
       } catch (error) {
         console.error("Error checking admin status:", error);
+        showToast.error("เกิดข้อผิดพลาดในการตรวจสอบสิทธิ์");
         navigate("/");
       }
     };
@@ -109,7 +116,17 @@ export const AdminOrdersPage = () => {
         )
         .order("created_at", { ascending: false });
 
-      if (error) throw error;
+      showToast.success("กำลังโหลดข้อมูลคำสั่งซื้อ...");
+
+      if (error) {
+        showToast.error("ไม่สามารถโหลดข้อมูลคำสั่งซื้อได้");
+        throw error;
+      }
+
+      if (data && data.length === 0) {
+        showToast.success("ไม่พบข้อมูลคำสั่งซื้อ");
+      } else {
+      }
 
       const transformedOrders = data?.map((order) => ({
         id: order.id,
@@ -163,26 +180,44 @@ export const AdminOrdersPage = () => {
     async (orderId: string) => {
       if (!window.confirm("คุณแน่ใจหรือไม่ที่จะลบคำสั่งซื้อนี้?")) return;
 
-      try {
-        // ลบ order_items ก่อน (ถ้าไม่ได้ตั้ง cascade delete)
-        await supabase.from("order_items").delete().eq("order_id", orderId);
+      const deletePromise = (async () => {
+        try {
+          // ลบ order_items ก่อน (ถ้าไม่ได้ตั้ง cascade delete)
+          await supabase.from("order_items").delete().eq("order_id", orderId);
 
-        // ลบ order
-        const { error } = await supabase
-          .from("orders")
-          .delete()
-          .eq("id", orderId);
+          // ลบ order
+          const { error } = await supabase
+            .from("orders")
+            .delete()
+            .eq("id", orderId);
 
-        if (error) throw error;
-        await loadOrders();
-      } catch (error) {
-        console.error("Error deleting order:", error);
-        alert("เกิดข้อผิดพลาดในการลบคำสั่งซื้อ");
-      }
+          if (error) throw error;
+          await loadOrders();
+          return "ลบคำสั่งซื้อเรียบร้อยแล้ว";
+        } catch (error) {
+          console.error("Error deleting order:", error);
+          throw new Error("เกิดข้อผิดพลาดในการลบคำสั่งซื้อ");
+        }
+      })();
+
+      showToast.promise(deletePromise, {
+        loading: "กำลังลบคำสั่งซื้อ...",
+        success: "ลบคำสั่งซื้อเรียบร้อยแล้ว",
+        error: "เกิดข้อผิดพลาดในการลบคำสั่งซื้อ",
+      });
     },
     [loadOrders]
   );
 
+  const handleCopyOrderId = async (orderId: string) => {
+    try {
+      await navigator.clipboard.writeText(orderId);
+      showToast.success("คัดลอกรหัสคำสั่งซื้อแล้ว");
+    } catch (err) {
+      console.error("Failed to copy:", err);
+      showToast.error("ไม่สามารถคัดลอกรหัสคำสั่งซื้อได้");
+    }
+  };
 
   // Filtering and pagination
   const filteredOrders = (orders ?? []).filter((order) => {
@@ -353,7 +388,26 @@ export const AdminOrdersPage = () => {
                 paginatedOrders.map((order) => (
                   <tr key={order.id} className="hover:bg-gray-50">
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {order.id}
+                      <button
+                        id={`order-${order.id}`}
+                        onClick={() => handleCopyOrderId(order.id)}
+                        className="hover:text-indigo-600 transition-colors duration-200 cursor-pointer flex items-center gap-1"
+                      >
+                        {order.id}
+                        <svg
+                          className="w-4 h-4 opacity-50 hover:opacity-100"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"
+                          />
+                        </svg>
+                      </button>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900">

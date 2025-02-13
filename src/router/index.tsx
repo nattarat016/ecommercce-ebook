@@ -3,7 +3,7 @@ import { RootLayout } from "../layouts/RootLayout";
 import { HomePage, CellPhonesPage, AboutPage } from "../pages";
 import { SignInPage } from "../pages/SignInPage";
 import { SignUpPage } from "../pages/SignUpPage";
-import ProductDetailPage from "../pages/ProductDetailPage";
+import { ProductDetailPage } from "../pages/ProductDetailPage";
 import { ErrorBoundary } from "../components/shared/ErrorBoundary";
 import { CheckoutPage } from "../pages/CheckoutPage";
 import { OrderSuccessPage } from "../pages/OrderSuccessPage";
@@ -66,6 +66,7 @@ export const router = createBrowserRouter([
         path: "orders",
         element: <OrdersPage />,
       },
+      
       {
         path: "*",
         element: <ErrorBoundary />,

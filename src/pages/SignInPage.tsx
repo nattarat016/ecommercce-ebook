@@ -1,44 +1,44 @@
 import React, { useState } from "react";
-import { useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { authService } from "../services/auth.service";
+import { showToast } from "../utils/toast";
 
 export const SignInPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
 
   // รับข้อความจากหน้าสมัครสมาชิก
   const message = location.state?.message;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setLoading(true);
 
     try {
-      if (!email || !password) {
-        throw new Error("กรุณากรอกอีเมลและรหัสผ่าน");
-      }
+      await authService.signIn(formData.email, formData.password);
+      showToast.success("เข้าสู่ระบบสำเร็จ");
 
-      const { user, isAdmin } = await authService.signIn(email, password);
-
-      if (user) {
-        // ถ้าเป็น admin ให้ redirect ไปหน้า admin
-        if (isAdmin) {
-          navigate("/admin");
-        } else {
-          navigate("/");
-        }
-      }
-    } catch (err: any) {
-      console.error("Sign in error:", err);
-      setError(err.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
+      // Get the redirect path from location state or default to home
+      const from = location.state?.from || "/";
+      navigate(from);
+    } catch (error: any) {
+      showToast.error(error.message || "เกิดข้อผิดพลาดในการเข้าสู่ระบบ");
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   return (
@@ -50,12 +50,12 @@ export const SignInPage = () => {
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
             หรือ{" "}
-            <button
-              onClick={() => navigate("/signup")}
+            <Link
+              to="/signup"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               สมัครสมาชิกใหม่
-            </button>
+            </Link>
           </p>
         </div>
 
@@ -66,26 +66,21 @@ export const SignInPage = () => {
         )}
 
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
-            </div>
-          )}
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="email-address" className="sr-only">
+              <label htmlFor="email" className="sr-only">
                 อีเมล
               </label>
               <input
-                id="email-address"
+                id="email"
                 name="email"
                 type="email"
                 autoComplete="email"
                 required
+                value={formData.email}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="อีเมล"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -98,10 +93,10 @@ export const SignInPage = () => {
                 type="password"
                 autoComplete="current-password"
                 required
+                value={formData.password}
+                onChange={handleChange}
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="รหัสผ่าน"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
