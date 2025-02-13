@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Note: We are intentionally tracking .env file for development purposes
+# Make sure not to include sensitive credentials in this file
+# !.env
