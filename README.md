@@ -26,7 +26,7 @@
 
 1. Clone โปรเจค:
    \`\`\`bash
-   git clone https://github.com/yourusername/ecommercce-mobile.git
+   git clone https://github.com/TitleKung-01/ecommercce-mobile.git
    \`\`\`
 
 2. ติดตั้ง dependencies:
