@@ -17,8 +17,8 @@ export const HomePage = () => {
       try {
         console.log("Fetching products...");
         const [recent, popular] = await Promise.all([
-          productService.getRecentProducts(),
-          productService.getPopularProducts(),
+          productService.getAllProducts(),
+          productService.getAllProducts(),
         ]);
         console.log("Recent products:", recent);
         console.log("Popular products:", popular);
@@ -27,13 +27,13 @@ export const HomePage = () => {
         setPopularProducts(popular as Product[]);
 
         if (recent.length === 0 && popular.length === 0) {
-          setError("ไม่พบรายการสินค้า");
-          showToast.error("ไม่พบรายการสินค้า");
+          setError("ไม่พบรายการ eBook");
+          showToast.error("ไม่พบรายการ eBook");
         }
       } catch (error: any) {
         console.error("Error loading products:", error);
-        setError(error.message || "เกิดข้อผิดพลาดในการโหลดสินค้า");
-        showToast.error(error.message || "เกิดข้อผิดพลาดในการโหลดสินค้า");
+        setError(error.message || "เกิดข้อผิดพลาดในการโหลด eBook");
+        showToast.error(error.message || "เกิดข้อผิดพลาดในการโหลด eBook");
       } finally {
         setLoading(false);
       }
@@ -57,17 +57,17 @@ export const HomePage = () => {
         <div className="text-center py-12">
           <p className="text-red-600">{error}</p>
           <p className="text-gray-600 mt-2">
-            กรุณาเพิ่มสินค้าในระบบผ่านหน้า Admin
+            กรุณาเพิ่ม eBook ในระบบผ่านหน้า Admin
           </p>
         </div>
       ) : (
         <>
           {recentProducts.length > 0 && (
-            <ProductGrid title="สินค้ามาใหม่" products={recentProducts} />
+            <ProductGrid title="eBook มาใหม่" products={recentProducts} />
           )}
           <Brands />
           {popularProducts.length > 0 && (
-            <ProductGrid title="สินค้ายอดนิยม" products={popularProducts} />
+            <ProductGrid title="eBook ยอดนิยม" products={popularProducts} />
           )}
         </>
       )}

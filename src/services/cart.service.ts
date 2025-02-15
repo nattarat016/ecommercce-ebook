@@ -90,7 +90,7 @@ export const cartService = {
         return data || [];
     },
 
-    addToCart: async (userId: string, productId: string, variantId: string, quantity: number): Promise<void> => {
+    addToCart: async (userId: string, productId: string): Promise<void> => {
         try {
             const cartId = await cartService.getOrCreateCart(userId);
 
@@ -98,15 +98,12 @@ export const cartService = {
                 .from('cart_items')
                 .select('*')
                 .eq('cart_id', cartId)
-                .eq('product_id', productId)
-                .eq('variant_id', variantId)
                 .single();
 
             if (existingItem) {
                 const { error } = await supabase
                     .from('cart_items')
                     .update({
-                        quantity: existingItem.quantity + quantity,
                         updated_at: new Date().toISOString()
                     })
                     .eq('id', existingItem.id);
@@ -118,8 +115,6 @@ export const cartService = {
                     .insert({
                         cart_id: cartId,
                         product_id: productId,
-                        variant_id: variantId,
-                        quantity
                     });
 
                 if (error) throw error;

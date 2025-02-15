@@ -51,7 +51,7 @@ export const router = createBrowserRouter([
         element: <ProfilePage />,
       },
       {
-        path: "celulares/:slug",
+        path: "ebooks/:slug",
         element: <ProductDetailPage />,
       },
       {

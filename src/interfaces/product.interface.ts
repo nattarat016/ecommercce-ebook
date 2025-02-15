@@ -13,33 +13,26 @@ export interface VariantProduct {
 	id: string;
 	stock: number;
 	price: number;
-	storage: string;
+	format: string; // Changed from 'storage' to 'format'
 	color: string;
 	color_name: string;
 }
 
 export interface BaseProduct {
 	id: string;
-	name: string;
-	brand: string;
-	slug: string;
+	title: string;
+	author_id: number; // Changed from 'name' to 'author_id'
+	category_id: number | null; // Added category_id
+	cover_url: string; // Changed from 'images' to 'cover_url'
 	price: number;
-	features: string[];
-	images: string[];
+	features: string[]; // Assuming features are still relevant
 	created_at: string;
+	published_at: string; // Added published_at
+	file_url: string; // Added file_url
 }
 
 export interface Product extends BaseProduct {
-	description: {
-		type: string;
-		content: Array<{
-			type: string;
-			content: Array<{
-				type: string;
-				text: string;
-			}>;
-		}>;
-	};
+	description: string; // Changed to string
 	colors: Array<{ color: string; color_name: string }>;
 	variants: VariantProduct[];
 	is_popular: boolean;

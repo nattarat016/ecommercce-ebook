@@ -65,16 +65,14 @@ export type ProductDescription = string | {
 };
 
 export interface Product {
+    title: string;
     id: string;
-    name: string;
+
     price: number;
     description: ProductDescription;
-    brand: string;
-    slug: string;
     colors: ProductColor[];
     features: string[];
-    images: string[];
-    variants: ProductVariant[];
+    cover_url: string;
     created_at: string;
     is_popular: boolean;
     view_count: number;

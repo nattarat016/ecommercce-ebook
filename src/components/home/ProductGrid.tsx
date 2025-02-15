@@ -24,11 +24,9 @@ export const ProductGrid = ({ title, products }: ProductGridProps) => {
               className="group transform hover:-translate-y-1 transition-all duration-300"
             >
               <CardProduct
-                img={product.images?.[0] || "https://via.placeholder.com/400"}
-                name={product.name}
+                img={product.cover_url || "https://via.placeholder.com/400"}
+                name={product.title}
                 price={product.price}
-                slug={product.slug}
-                variants={product.variants || []}
                 colors={(product.colors || []).map((color) => ({
                   name: color.color_name,
                   color: color.color,

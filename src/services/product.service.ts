@@ -6,25 +6,18 @@ export const productService = {
     getAllProducts: async (): Promise<Product[]> => {
         try {
             const { data, error } = await supabase
-                .from('products')
-                .select(`
-                    *,
-                    variants:product_variants (
-                        id,
-                        color,
-                        color_name,
-                        storage,
-                        price,
-                        stock
-                    )
-                `)
+                .from('Ebooks')
+                .select(`*,
+                    Categories (
+                        name
+                    ),
+                    Authors:Users(
+                        username)`)
                 .order('created_at', { ascending: false });
-
             if (error) {
                 console.error('Error fetching all products:', error);
                 throw error;
             }
-
             return data || [];
         } catch (error) {
             console.error('Error in getAllProducts:', error);
