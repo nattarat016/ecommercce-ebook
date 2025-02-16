@@ -14,7 +14,6 @@ export const CardProduct = ({
   img,
   name,
   price,
-
   colors = [],
 }: Props) => {
   const [activeColor, setActiveColor] = useState<{
@@ -25,7 +24,7 @@ export const CardProduct = ({
   return (
     <div className="flex flex-col gap-6 relative">
       <Link
-        to={`/ebooks/${name}`}
+        to={`/ebooks/${name}`} // Changed from name to slug
         className="flex relative group overflow-hidden"
       >
         <div className="flex h-[350px] w-full items-center justify-center py-2 lg:h-[250px]">

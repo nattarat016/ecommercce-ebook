@@ -44,6 +44,8 @@ export const Navbar = () => {
   useEffect(() => {
     const checkAuth = async () => {
       const currentUser = await authService.getCurrentUser();
+      console.log("Current user:", currentUser);
+      
       setUser(currentUser);
       if (currentUser) {
         updateCartCount(currentUser.id);

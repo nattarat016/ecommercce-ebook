@@ -60,6 +60,7 @@ export const ProductDetailPage = () => {
   const handleAddToCart = async () => {
     try {
       const user = await authService.getCurrentUser();
+      console.log("User:", user);
       if (!user) {
         showToast.error("กรุณาเข้าสู่ระบบเพื่อเพิ่มสินค้าลงตะกร้า");
         navigate("/signin", { state: { from: location.pathname } });

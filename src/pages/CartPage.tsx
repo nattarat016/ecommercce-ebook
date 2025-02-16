@@ -5,8 +5,6 @@ import { authService } from "../services/auth.service";
 import { formatPrice } from "../helpers";
 import {
   BiTrash,
-  BiMinus,
-  BiPlus,
   BiArrowBack,
   BiInfoCircle,
 } from "react-icons/bi";
@@ -38,16 +36,6 @@ export const CartPage = () => {
     }
   };
 
-  const handleUpdateQuantity = async (itemId: string, newQuantity: number) => {
-    try {
-      if (newQuantity < 1) return;
-      await cartService.updateCartItemQuantity(itemId, newQuantity);
-      await loadCartItems();
-    } catch (err: any) {
-      showToast.error(err.message);
-    }
-  };
-
   const handleRemoveItem = async (itemId: string) => {
     try {
       await cartService.removeFromCart(itemId);
@@ -59,8 +47,8 @@ export const CartPage = () => {
 
   const calculateTotal = () => {
     return cartItems.reduce((sum, item) => {
-      const price = item.variant?.price || 0;
-      return sum + price * item.quantity;
+      const price = item.price || 0;
+      return sum + price;
     }, 0);
   };
 
@@ -112,10 +100,10 @@ export const CartPage = () => {
                         <div className="flex-shrink-0 w-24 h-24">
                           <img
                             src={
-                              item.product?.images?.[0] ||
+                              item.Ebooks?.cover_url?.[0] ||
                               "https://via.placeholder.com/150"
                             }
-                            alt={item.product?.name}
+                            alt={item.Ebooks?.title}
                             className="w-full h-full object-cover rounded-md"
                           />
                         </div>
@@ -123,18 +111,12 @@ export const CartPage = () => {
                           <div className="flex items-center justify-between">
                             <div>
                               <h3 className="text-lg font-medium text-gray-900">
-                                {item.product?.name}
+                                {item.Ebooks?.title}
                               </h3>
                               <div className="mt-1 space-y-1">
                                 <p className="text-sm text-gray-500">
-                                  สี: {item.variant?.color_name}
-                                </p>
-                                <p className="text-sm text-gray-500">
-                                  ความจุ: {item.variant?.storage}
-                                </p>
-                                <p className="text-sm text-gray-500">
                                   ราคาต่อชิ้น:{" "}
-                                  {formatPrice(item.variant?.price || 0)}
+                                  {formatPrice(item.Ebooks?.price || 0)}
                                 </p>
                               </div>
                             </div>
@@ -142,38 +124,7 @@ export const CartPage = () => {
                           <div className="mt-4 flex items-center justify-between">
                             <div className="flex items-center space-x-4">
                               <div className="flex items-center border rounded-lg">
-                                <button
-                                  onClick={() =>
-                                    handleUpdateQuantity(
-                                      item.id,
-                                      item.quantity - 1
-                                    )
-                                  }
-                                  className="p-2 hover:bg-gray-100"
-                                  disabled={item.quantity <= 1}
-                                >
-                                  <BiMinus
-                                    className={
-                                      item.quantity <= 1
-                                        ? "text-gray-300"
-                                        : "text-gray-600"
-                                    }
-                                  />
-                                </button>
-                                <span className="px-4 py-2 text-gray-900">
-                                  {item.quantity}
-                                </span>
-                                <button
-                                  onClick={() =>
-                                    handleUpdateQuantity(
-                                      item.id,
-                                      item.quantity + 1
-                                    )
-                                  }
-                                  className="p-2 hover:bg-gray-100"
-                                >
-                                  <BiPlus className="text-gray-600" />
-                                </button>
+                               
                               </div>
                               <button
                                 onClick={() => handleRemoveItem(item.id)}
@@ -184,7 +135,7 @@ export const CartPage = () => {
                             </div>
                             <p className="text-lg font-medium text-gray-900">
                               {formatPrice(
-                                (item.variant?.price || 0) * item.quantity
+                                (item.Ebooks?.price || 0)
                               )}
                             </p>
                           </div>

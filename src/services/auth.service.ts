@@ -30,7 +30,7 @@ export const authService = {
         // ดึงข้อมูล profile เพื่อเช็ค admin
         if (data.user) {
             const { data: profileData, error: profileError } = await supabase
-                .from('profiles')
+                .from('Users')
                 .select('is_admin')
                 .eq('user_id', data.user.id)
                 .single();

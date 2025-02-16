@@ -103,7 +103,7 @@ export const AdminOrdersPage = () => {
             *,
             product:products (
               id,
-              name,
+              title,
               brand
             ),
             variant:product_variants (

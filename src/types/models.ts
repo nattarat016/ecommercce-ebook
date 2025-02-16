@@ -97,7 +97,7 @@ export interface Order {
         price: number;
         product: {
             id: string;
-            name: string;
+            title: string;
             brand: string;
         };
         variant: {

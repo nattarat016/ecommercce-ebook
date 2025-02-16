@@ -1,27 +1,16 @@
 import { supabase } from '../lib/supabase';
 
 export interface CartItem {
+    price: number;
     id: string;
-    cart_id: string;
-    product_id: string;
-    variant_id: string;
-    quantity: number;
-    created_at?: string;
-    updated_at?: string;
+    order_id: string;
+    ebook_id: string;
     // Join fields
-    product?: {
+    Ebooks?: {
         id: string;
-        name: string;
-        images: string[];
+        title: string;
+        cover_url: string; // Changed from 'images' to 'cover_url'
         price: number;
-    };
-    variant?: {
-        id: string;
-        color: string;
-        color_name: string;
-        storage: string;
-        price: number;
-        stock: number;
     };
 }
 
@@ -29,25 +18,28 @@ export const cartService = {
     getOrCreateCart: async (userId: string): Promise<string> => {
         try {
             const { data: existingCart, error: fetchError } = await supabase
-                .from('carts')
+                .from('Orders')
                 .select('id')
                 .eq('user_id', userId)
-                .eq('status', 'active')
+                // .eq('status', 'active')
                 .single();
 
             if (fetchError && fetchError.code !== 'PGRST116') {
+                console.error('Error fetching cart:', fetchError);
                 throw fetchError;
             }
+            console.log('Existing cart:', existingCart);
 
             if (existingCart) {
+                console.log('Existing cart:', existingCart);
                 return existingCart.id;
             }
 
             const { data: newCart, error: createError } = await supabase
-                .from('carts')
+                .from('Orders')
                 .insert({
                     user_id: userId,
-                    status: 'active'
+                    // status: 'active'
                 })
                 .select('id')
                 .single();
@@ -66,25 +58,17 @@ export const cartService = {
         const cartId = await cartService.getOrCreateCart(userId);
 
         const { data, error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .select(`
                 *,
-                product:products (
+                Ebooks (
                     id,
-                    name,
-                    images,
+                    title,
+                    cover_url,
                     price
-                ),
-                variant:product_variants (
-                    id,
-                    color,
-                    color_name,
-                    storage,
-                    price,
-                    stock
                 )
             `)
-            .eq('cart_id', cartId);
+            .eq('order_id', cartId);
 
         if (error) throw error;
         return data || [];
@@ -92,17 +76,18 @@ export const cartService = {
 
     addToCart: async (userId: string, productId: string): Promise<void> => {
         try {
-            const cartId = await cartService.getOrCreateCart(userId);
+            const orderId = await cartService.getOrCreateCart(userId);
 
             const { data: existingItem } = await supabase
-                .from('cart_items')
+                .from('Order_Items')
                 .select('*')
-                .eq('cart_id', cartId)
+                .eq('order_id', orderId)
+                .eq('ebook_id', productId)
                 .single();
 
             if (existingItem) {
                 const { error } = await supabase
-                    .from('cart_items')
+                    .from('Order_Items')
                     .update({
                         updated_at: new Date().toISOString()
                     })
@@ -111,10 +96,10 @@ export const cartService = {
                 if (error) throw error;
             } else {
                 const { error } = await supabase
-                    .from('cart_items')
+                    .from('Order_Items')
                     .insert({
-                        cart_id: cartId,
-                        product_id: productId,
+                        order_id: orderId,
+                        ebook_id: productId,
                     });
 
                 if (error) throw error;
@@ -171,15 +156,15 @@ export const cartService = {
             .from('cart_items')
             .select(`
                 quantity,
-                variant:product_variants (price)
+                product:products (price)
             `)
             .eq('user_id', userId);
 
         if (error) throw error;
 
         return data.reduce((total, item) => {
-            const price = item.variant?.[0]?.price || 0;
+            const price = item.product?.[0].price || 0;
             return total + (item.quantity * price);
         }, 0);
     }
-}; 
+};
