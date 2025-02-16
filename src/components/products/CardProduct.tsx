@@ -7,6 +7,7 @@ interface Props {
   img: string;
   name: string;
   price: number;
+  slug: string; // เพิ่ม slug
   colors: { name: string; color: string }[];
 }
 
@@ -14,6 +15,7 @@ export const CardProduct = ({
   img,
   name,
   price,
+  slug, // เพิ่ม slug
   colors = [],
 }: Props) => {
   const [activeColor, setActiveColor] = useState<{
@@ -24,7 +26,7 @@ export const CardProduct = ({
   return (
     <div className="flex flex-col gap-6 relative">
       <Link
-        to={`/ebooks/${name}`} // Changed from name to slug
+        to={`/ebooks/${slug}`} // Changed from name to slug
         className="flex relative group overflow-hidden"
       >
         <div className="flex h-[350px] w-full items-center justify-center py-2 lg:h-[250px]">

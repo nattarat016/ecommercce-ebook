@@ -42,28 +42,27 @@ export const Navbar = () => {
   };
 
   useEffect(() => {
-    const checkAuth = async () => {
-      const currentUser = await authService.getCurrentUser();
-      console.log("Current user:", currentUser);
+    // const checkAuth = async () => {
+    //   const currentUser = await authService.getCurrentUser();
       
-      setUser(currentUser);
-      if (currentUser) {
-        updateCartCount(currentUser.id);
-        const adminStatus = await authService.isAdmin(currentUser.id);
-        setIsAdmin(adminStatus);
-      } else {
-        updateCartCount();
-      }
-    };
-    checkAuth();
+    //   setUser(currentUser);
+    //   if (currentUser) {
+    //     updateCartCount(currentUser.id);
+    //     const adminStatus = await authService.isAdmin(currentUser.id);
+    //     setIsAdmin(adminStatus);
+    //   } else {
+    //     updateCartCount();
+    //   }
+    // };
+    // checkAuth();
 
     const { data: authListener } = authService.onAuthStateChange(
       async (_event, session) => {
         setUser(session?.user);
         if (session?.user) {
           updateCartCount(session.user.id);
-          const adminStatus = await authService.isAdmin(session.user.id);
-          setIsAdmin(adminStatus);
+          // const adminStatus = await authService.isAdmin(session.user.id);
+          // setIsAdmin(adminStatus);
         } else {
           updateCartCount();
         }

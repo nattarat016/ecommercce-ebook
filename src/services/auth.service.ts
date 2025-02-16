@@ -31,7 +31,7 @@ export const authService = {
         if (data.user) {
             const { data: profileData, error: profileError } = await supabase
                 .from('Users')
-                .select('is_admin')
+                .select('role')
                 .eq('user_id', data.user.id)
                 .single();
 
@@ -39,7 +39,7 @@ export const authService = {
 
             return {
                 user: data.user,
-                isAdmin: profileData?.is_admin || false
+                isAdmin: profileData?.role == 'admin'
             };
         }
 

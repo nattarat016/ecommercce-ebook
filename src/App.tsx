@@ -30,8 +30,7 @@ function App() {
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
               <Route path="/cart" element={<CartPage />} />
-              <Route path="/celulares" element={<CellPhonesPage />} />
-              <Route path="/celulares/:slug" element={<ProductDetailPage />} />
+              <Route path="/ebooks/:slug" element={<ProductDetailPage />} /> {/* เปลี่ยนจาก celulares เป็น ebooks */}
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/order-success" element={<OrderSuccessPage />} />
               <Route path="/orders" element={<OrdersPage />} />

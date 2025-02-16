@@ -47,7 +47,7 @@ export const CartPage = () => {
 
   const calculateTotal = () => {
     return cartItems.reduce((sum, item) => {
-      const price = item.price || 0;
+      const price = item.Ebooks?.price || 0;
       return sum + price;
     }, 0);
   };

@@ -1,37 +1,41 @@
 import { supabase } from '../lib/supabase';
 
 export interface CartItem {
-    price: number;
     id: string;
     order_id: string;
     ebook_id: string;
+    created_at?: string;
     // Join fields
     Ebooks?: {
         id: string;
         title: string;
-        cover_url: string; // Changed from 'images' to 'cover_url'
+        cover_url: string;
         price: number;
+        author_id: string;
     };
 }
 
 export const cartService = {
     getOrCreateCart: async (userId: string): Promise<string> => {
         try {
+            if (!supabase) {
+                throw new Error('Supabase client not initialized');
+            }
+
             const { data: existingCart, error: fetchError } = await supabase
                 .from('Orders')
                 .select('id')
                 .eq('user_id', userId)
-                // .eq('status', 'active')
                 .single();
+
+            console.log('Fetch response:', { existingCart, fetchError });
 
             if (fetchError && fetchError.code !== 'PGRST116') {
                 console.error('Error fetching cart:', fetchError);
                 throw fetchError;
             }
-            console.log('Existing cart:', existingCart);
 
             if (existingCart) {
-                console.log('Existing cart:', existingCart);
                 return existingCart.id;
             }
 
@@ -39,7 +43,6 @@ export const cartService = {
                 .from('Orders')
                 .insert({
                     user_id: userId,
-                    // status: 'active'
                 })
                 .select('id')
                 .single();
@@ -61,14 +64,16 @@ export const cartService = {
             .from('Order_Items')
             .select(`
                 *,
-                Ebooks (
+                Ebooks : ebook_id(
                     id,
                     title,
                     cover_url,
-                    price
+                    price,
+                    author_id
                 )
             `)
             .eq('order_id', cartId);
+
 
         if (error) throw error;
         return data || [];
@@ -112,7 +117,7 @@ export const cartService = {
 
     updateCartItemQuantity: async (itemId: string, quantity: number): Promise<void> => {
         const { error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .update({
                 quantity,
                 updated_at: new Date().toISOString()
@@ -124,7 +129,7 @@ export const cartService = {
 
     removeFromCart: async (itemId: string): Promise<void> => {
         const { error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .delete()
             .eq('id', itemId);
 
@@ -134,7 +139,7 @@ export const cartService = {
     clearCart: async (userId: string): Promise<void> => {
         const cartId = await cartService.getOrCreateCart(userId);
         const { error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .delete()
             .eq('cart_id', cartId);
 
@@ -143,7 +148,7 @@ export const cartService = {
 
     getCartItemCount: async (userId: string): Promise<number> => {
         const { count, error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .select('*', { count: 'exact', head: true })
             .eq('user_id', userId);
 
@@ -153,18 +158,17 @@ export const cartService = {
 
     getCartTotal: async (userId: string): Promise<number> => {
         const { data, error } = await supabase
-            .from('cart_items')
+            .from('Order_Items')
             .select(`
-                quantity,
-                product:products (price)
+                Ebooks (price)
             `)
             .eq('user_id', userId);
 
         if (error) throw error;
 
         return data.reduce((total, item) => {
-            const price = item.product?.[0].price || 0;
-            return total + (item.quantity * price);
+            const price = item.Ebooks?.[0]?.price || 0;
+            return total + price;
         }, 0);
     }
 };

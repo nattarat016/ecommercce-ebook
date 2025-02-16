@@ -39,10 +39,8 @@ class OrderService {
         // Create order items
         const orderItems = input.items.map(item => ({
             order_id: data!.id,
-            product_id: item.product_id,
-            variant_id: item.variant_id,
-            quantity: item.quantity,
-            price: item.variant?.price || 0
+            ebook_id: item.ebook_id,
+            price: item.Ebooks?.price || 0
         }));
 
         const { error: itemsError } = await supabase
@@ -57,14 +55,9 @@ class OrderService {
     // Get user orders
     async getUserOrders(userId: string): Promise<Order[]> {
         const { data, error } = await supabase
-            .from('orders')
+            .from('Orders')
             .select(`
-                *,
-                items:order_items(
-                    *,
-                    product:products(*),
-                    variant:product_variants(*)
-                )
+                *
             `)
             .eq('user_id', userId)
             .order('created_at', { ascending: false });
@@ -195,10 +188,8 @@ class OrderService {
         // 3. สร้าง order items
         const orderItems = cartItems.map(item => ({
             order_id: order.id,
-            product_id: item.product_id,
-            variant_id: item.variant_id,
-            quantity: item.quantity,
-            price: item.variant?.price || 0
+            ebook_id: item.ebook_id,
+            price: item.Ebooks?.price || 0
         }));
 
         const { error: itemsError } = await supabase
