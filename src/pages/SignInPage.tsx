@@ -22,8 +22,6 @@ export const SignInPage = () => {
     try {
       await authService.signIn(formData.email, formData.password);
       showToast.success("เข้าสู่ระบบสำเร็จ");
-
-      // Get the redirect path from location state or default to home
       const from = location.state?.from || "/";
       navigate(from);
     } catch (error: any) {
@@ -42,17 +40,17 @@ export const SignInPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-2xl border border-white/20">
+        <div className="transform transition-all duration-500 animate-fadeIn">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 animate-slideDown">
             เข้าสู่ระบบ
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 animate-fadeIn">
             หรือ{" "}
             <Link
               to="/signup"
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200 hover:underline"
             >
               สมัครสมาชิกใหม่
             </Link>
@@ -60,15 +58,18 @@ export const SignInPage = () => {
         </div>
 
         {message && (
-          <div className="rounded-md bg-green-50 p-4">
+          <div className="rounded-md bg-green-50/80 backdrop-blur-sm p-4 animate-slideDown">
             <div className="text-sm text-green-700">{message}</div>
           </div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email" className="sr-only">
+        <form className="mt-8 space-y-6 animate-fadeIn" onSubmit={handleSubmit}>
+          <div className="space-y-4">
+            <div className="transform transition-all duration-300 hover:translate-x-1">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 อีเมล
               </label>
               <input
@@ -79,12 +80,15 @@ export const SignInPage = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="อีเมล"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                placeholder="กรอกอีเมลของคุณ"
               />
             </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
+            <div className="transform transition-all duration-300 hover:translate-x-1">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 mb-1"
+              >
                 รหัสผ่าน
               </label>
               <input
@@ -95,19 +99,45 @@ export const SignInPage = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="รหัสผ่าน"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                placeholder="กรอกรหัสผ่านของคุณ"
               />
             </div>
           </div>
 
-          <div>
+          <div className="mt-6">
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400"
+              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
             >
-              {loading ? "กำลังเข้าสู่ระบบ..." : "เข้าสู่ระบบ"}
+              {loading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  กำลังเข้าสู่ระบบ...
+                </span>
+              ) : (
+                "เข้าสู่ระบบ"
+              )}
             </button>
           </div>
         </form>

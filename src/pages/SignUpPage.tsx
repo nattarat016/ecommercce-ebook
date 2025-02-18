@@ -58,7 +58,7 @@ export const SignUpPage = () => {
 
       if (user) {
         showToast.success("ลงทะเบียนสำเร็จ");
-        navigate("/signin", {
+        navigate("/", {
           state: {
             message: "ลงทะเบียนสำเร็จ กรุณาเข้าสู่ระบบ",
           },
@@ -74,119 +74,131 @@ export const SignUpPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-blue-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-md w-full space-y-8 bg-white/80 backdrop-blur-sm p-8 rounded-xl shadow-lg transform transition-all duration-300 hover:shadow-2xl border border-white/20">
+        <div className="transform transition-all duration-500 animate-fadeIn">
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 animate-slideDown">
             สมัครสมาชิกใหม่
           </h2>
-          <p className="mt-2 text-center text-sm text-gray-600">
+          <p className="mt-2 text-center text-sm text-gray-600 animate-fadeIn">
             หรือ{" "}
             <button
               onClick={() => navigate("/signin")}
-              className="font-medium text-indigo-600 hover:text-indigo-500"
+              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200 hover:underline"
             >
               เข้าสู่ระบบ
             </button>
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6 animate-fadeIn" onSubmit={handleSubmit}>
           {error && (
-            <div className="rounded-md bg-red-50 p-4">
+            <div className="rounded-md bg-red-50/80 backdrop-blur-sm p-4 animate-shake">
               <div className="text-sm text-red-700">{error}</div>
             </div>
           )}
 
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="email-address" className="sr-only">
-                อีเมล
-              </label>
-              <input
-                id="email-address"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="อีเมล"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="username" className="sr-only">
-                ชื่อผู้ใช้
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                autoComplete="username"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="ชื่อผู้ใช้"
-                value={formData.username}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="age" className="sr-only">
-                อายุ
-              </label>
-              <input
-                id="age"
-                name="age"
-                type="number"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="อายุ"
-                value={formData.age}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                รหัสผ่าน
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="รหัสผ่าน"
-                value={formData.password}
-                onChange={handleChange}
-              />
-            </div>
-            <div>
-              <label htmlFor="confirm-password" className="sr-only">
-                ยืนยันรหัสผ่าน
-              </label>
-              <input
-                id="confirm-password"
-                name="confirmPassword"
-                type="password"
-                autoComplete="new-password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="ยืนยันรหัสผ่าน"
-                value={formData.confirmPassword}
-                onChange={handleChange}
-              />
-            </div>
+          <div className="space-y-4">
+            {[
+              {
+                id: "email-address",
+                name: "email",
+                type: "email",
+                label: "อีเมล",
+                placeholder: "กรอกอีเมลของคุณ",
+                autoComplete: "email",
+              },
+              {
+                id: "username",
+                name: "username",
+                type: "text",
+                label: "ชื่อผู้ใช้",
+                placeholder: "กรอกชื่อผู้ใช้ของคุณ",
+                autoComplete: "username",
+              },
+              {
+                id: "age",
+                name: "age",
+                type: "number",
+                label: "อายุ",
+                placeholder: "กรอกอายุของคุณ",
+                autoComplete: "off",
+              },
+              {
+                id: "password",
+                name: "password",
+                type: "password",
+                label: "รหัสผ่าน",
+                placeholder: "กรอกรหัสผ่านของคุณ",
+                autoComplete: "new-password",
+              },
+              {
+                id: "confirm-password",
+                name: "confirmPassword",
+                type: "password",
+                label: "ยืนยันรหัสผ่าน",
+                placeholder: "กรอกรหัสผ่านอีกครั้ง",
+                autoComplete: "new-password",
+              },
+            ].map((field) => (
+              <div
+                key={field.id}
+                className="transform transition-all duration-300 hover:translate-x-1"
+              >
+                <label
+                  htmlFor={field.id}
+                  className="block text-sm font-medium text-gray-700 mb-1"
+                >
+                  {field.label}
+                </label>
+                <input
+                  id={field.id}
+                  name={field.name}
+                  type={field.type}
+                  autoComplete={field.autoComplete}
+                  required
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                  placeholder={field.placeholder}
+                  value={formData[field.name as keyof typeof formData]}
+                  onChange={handleChange}
+                />
+              </div>
+            ))}
           </div>
 
-          <div>
+          <div className="mt-6">
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
             >
-              {loading ? "กำลังดำเนินการ..." : "สมัครสมาชิก"}
+              {loading ? (
+                <span className="flex items-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  กำลังดำเนินการ...
+                </span>
+              ) : (
+                "สมัครสมาชิก"
+              )}
             </button>
           </div>
         </form>
