@@ -121,8 +121,8 @@ export const Navbar = () => {
     switch (title) {
       case "หน้าแรก":
         return <BiHomeAlt className="w-5 h-5" />;
-      case "โทรศัพท์มือถือ":
-        return <BiPhone className="w-5 h-5" />;
+      case "หนังสือ":
+        return <BiBook className="w-5 h-5" />;
       case "เกี่ยวกับเรา":
         return <BiInfoCircle className="w-5 h-5" />;
       default:
@@ -140,7 +140,7 @@ export const Navbar = () => {
                 to="/"
                 className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent hover:from-indigo-600 hover:to-purple-700 transition-all"
               >
-                MeowwwMobile
+                Libria
               </Link>
             </div>
             <div className="hidden sm:ml-8 sm:flex sm:space-x-8">
