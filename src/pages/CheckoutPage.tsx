@@ -41,8 +41,8 @@ export const CheckoutPage = () => {
 
   const calculateSubtotal = () => {
     return cartItems.reduce((total, item) => {
-      const variant = item.variant?.price || 0;
-      return total + (variant * item.quantity);
+      const variant = item.Ebooks?.price || 0;
+      return total + (variant);
     }, 0);
   };
 
@@ -80,23 +80,23 @@ export const CheckoutPage = () => {
       }
 
       // Create order
-      await orderService.createOrder({
-        userId: user.id,
-        items: cartItems,
-        shippingAddress: {
-          fullName: formData.fullName,
-          email: formData.email,
-          phone: formData.phone,
-          address: formData.address,
-          province: formData.province,
-          postalCode: formData.postalCode,
-        },
-        paymentMethod: formData.paymentMethod,
-        total: calculateTotal(),
-      });
+      // await orderService.createOrder({
+      //   userId: user.id,
+      //   items: cartItems,
+      //   shippingAddress: {
+      //     fullName: formData.fullName,
+      //     email: formData.email,
+      //     phone: formData.phone,
+      //     address: formData.address,
+      //     province: formData.province,
+      //     postalCode: formData.postalCode,
+      //   },
+      //   paymentMethod: formData.paymentMethod,
+      //   total: calculateTotal(),
+      // });
 
       // Clear cart after successful order
-      await cartService.clearCart(user.id);
+      // await cartService.clearCart(user.id);
 
       // Redirect to order confirmation page
       navigate("/order-success");
@@ -253,22 +253,16 @@ export const CheckoutPage = () => {
                 return (
                   <div key={item.id} className="flex items-center space-x-4">
                     <img
-                      src={item.product?.images[0]}
-                      alt={item.product?.name}
+                      src={item.Ebooks?.cover_url}
+                      alt={item.Ebooks?.title}
                       className="w-16 h-16 object-cover rounded-md"
                     />
                     <div className="flex-1">
-                      <h3 className="font-medium">{item.product?.name}</h3>
-                      <p className="text-sm text-gray-500">
-                        {item.variant?.storage} - {item.variant?.color_name}
-                      </p>
-                      <p className="text-sm">
-                        ฿{item.variant?.price.toLocaleString()} x {item.quantity}
-                      </p>
+                      <h3 className="font-medium">{item.Ebooks?.title}</h3>
                     </div>
                     <p className="font-medium">
                       ฿
-                      {((item.variant?.price || 0) * item.quantity).toLocaleString()}
+                      {((item.Ebooks?.price || 0)).toLocaleString()}
                     </p>
                   </div>
                 );

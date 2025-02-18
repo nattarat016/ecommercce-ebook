@@ -100,7 +100,7 @@ export const CartPage = () => {
                         <div className="flex-shrink-0 w-24 h-24">
                           <img
                             src={
-                              item.Ebooks?.cover_url?.[0] ||
+                              item.Ebooks?.cover_url ||
                               "https://via.placeholder.com/150"
                             }
                             alt={item.Ebooks?.title}

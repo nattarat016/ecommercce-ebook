@@ -234,14 +234,14 @@ export const Navbar = () => {
                       <BiUserCircle className="w-5 h-5 mr-2" />
                       โปรไฟล์
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/orders"
                       className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-all"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       <BiHistory className="w-5 h-5 mr-3" />
                       ประวัติการสั่งซื้อ
-                    </Link>
+                    </Link> */}
                     <div className="border-t border-gray-100">
                       <button
                         onClick={() => {

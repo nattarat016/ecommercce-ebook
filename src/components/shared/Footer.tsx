@@ -40,12 +40,12 @@ export const Footer = () => {
                 </Link>
               </li>
               <li>
-                <Link
+                {/* <Link
                   to="/orders"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   ติดตามคำสั่งซื้อ
-                </Link>
+                </Link> */}
               </li>
             </ul>
           </div>
