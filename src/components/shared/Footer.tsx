@@ -11,10 +11,10 @@ export const Footer = () => {
           {/* Brand Section */}
           <div className="space-y-4">
             <Link to="/" className="text-2xl font-bold text-white">
-              MeowwwMobile
+              Libria
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed">
-              ร้านค้าโทรศัพท์มือถือออนไลน์ที่คุณไว้วางใจได้ พร้อมให้บริการตลอด
+              ร้านค้าหนังสืออิเล็กทรอนิกส์ออนไลน์ที่คุณไว้วางใจได้ พร้อมให้บริการตลอด
               24 ชั่วโมง
             </p>
           </div>
