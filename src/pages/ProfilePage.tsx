@@ -61,7 +61,7 @@ export default function ProfilePage() {
       </div>
 
       {/* Recent Orders Section */}
-      <div className="bg-white rounded-xl shadow-sm p-6">
+      {/* <div className="bg-white rounded-xl shadow-sm p-6">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold text-gray-900">คำสั่งซื้อล่าสุด</h2>
           <Link
@@ -70,7 +70,7 @@ export default function ProfilePage() {
           >
             ดูทั้งหมด
           </Link>
-        </div>
+        </div> */}
 
         {recentOrders.length > 0 ? (
           <div className="space-y-4">
@@ -140,6 +140,6 @@ export default function ProfilePage() {
           </div>
         )}
       </div>
-    </div>
+    // </div>
   );
 }

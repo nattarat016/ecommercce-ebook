@@ -146,7 +146,7 @@ export const ProductDetailPage = () => {
                 {typeof product.description === "string"
                   ? product.description
                   : product.description?.content?.[0]?.content?.[0]?.text ||
-                    "ไม่มีคำอธิบายสินค้า"}
+                    "ไม่มีคำอธิบายสินค้าครับ"}
               </div>
             </div>
 
@@ -174,25 +174,9 @@ export const ProductDetailPage = () => {
               </button>
 
             </div>
-
-            {/* คุณสมบัติเด่น */}
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">
-                คุณสมบัติเด่น
-              </h3>
-              <div className="mt-4">
-                <ul className="pl-4 list-disc text-sm space-y-2">
-                  {(product.features || []).map((feature: string) => (
-                    <li key={feature} className="text-gray-600">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };

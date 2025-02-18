@@ -3,20 +3,39 @@ import { supabase } from '../lib/supabase';
 
 export const authService = {
     // ลงทะเบียนผู้ใช้ใหม่
-    signUp: async (email: string, password: string, fullName: string) => {
+    signUp: async (email: string, password: string, username: string, age: number) => {
+        // 1. สร้างผู้ใช้ใน auth
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
                 data: {
-                    full_name: fullName,
+                    username: username,
                 }
             }
         });
 
         if (error) throw error;
-        console.log('data', data);
-        
+
+        // 2. สร้างข้อมูลในตาราง Users
+        if (data.user) {
+            const { error: userError } = await supabase
+                .from('Users')
+                .insert([
+                    {
+                        user_id: data.user.id,
+                        username: username,
+                        email: email,
+                        age: age,
+                        role: 'customer',
+                        created_at: new Date().toISOString(),
+                        balance: 0
+                    }
+                ]);
+
+            if (userError) throw userError;
+        }
+
         return data;
     },
 
@@ -89,13 +108,14 @@ export const authService = {
     // เช็คว่าผู้ใช้เป็น admin หรือไม่
     isAdmin: async (userId: string): Promise<boolean> => {
         const { data, error } = await supabase
-            .from('profiles')
-            .select('is_admin')
+            .from('Users')
+            .select('role')
             .eq('user_id', userId)
             .single();
 
         if (error) throw error;
-        return data?.is_admin || false;
+
+        return data?.role == 'admin' || false;
     },
 
     // ดึงข้อมูล session ปัจจุบัน
