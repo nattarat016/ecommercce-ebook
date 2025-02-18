@@ -11,10 +11,10 @@ export const AboutPage = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-black/20" />
         <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            เกี่ยวกับ MeowwwMobile
+            เกี่ยวกับ Libria
           </h1>
           <p className="text-lg text-gray-200">
-            ร้านค้าโทรศัพท์มือถือที่คุณไว้วางใจได้
+            ร้านค้า E-Book ที่คุณไว้วางใจได้
           </p>
         </div>
       </div>
@@ -26,15 +26,15 @@ export const AboutPage = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">เราคือใคร</h2>
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
             <p className="text-gray-600 leading-relaxed mb-6">
-              MeowwwMobile เป็นร้านค้าออนไลน์ที่จำหน่ายโทรศัพท์มือถือ
+              Libria เป็นร้านค้าออนไลน์ที่จำหน่ายโทรศัพท์มือถือ
               ก่อตั้งขึ้นในปี 2021
               ด้วยเป้าหมายที่จะมอบสินค้าคุณภาพดีในราคาที่เหมาะสมให้กับลูกค้าของเรา
               เรามีทีมงานมืออาชีพที่คอยคัดสรรผลิตภัณฑ์ที่ดีที่สุดสำหรับคุณ
             </p>
             <p className="text-gray-600 leading-relaxed">
-              ที่ MeowwwMobile
-              คุณจะพบกับโทรศัพท์มือถือหลากหลายรุ่นจากแบรนด์ชั้นนำ
-              นอกจากนี้เรายังมีโปรโมชั่นและส่วนลดพิเศษเพื่อให้คุณได้ซื้อโทรศัพท์มือถือในราคาที่ดีที่สุด
+              ที่ Libria 
+              คุณจะพบกับหนังสืออิเล็กทรอนิกส์หลากหลายเล่มชั้นนำ
+              นอกจากนี้เรายังมีโปรโมชั่นและส่วนลดพิเศษเพื่อให้คุณได้ซื้อ E-Book ในราคาที่ดีที่สุด
             </p>
           </div>
         </section>
@@ -136,10 +136,10 @@ export const AboutPage = () => {
                 />
               </svg>
               <a
-                href="mailto:contact@meowwwmobile.com"
+                href="mailto:contact@meaowwwmobile.com"
                 className="hover:underline"
               >
-                contact@meowwwmobile.com
+                contact@Libria.com
               </a>
             </p>
             <p className="flex items-center">
