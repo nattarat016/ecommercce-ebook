@@ -19,11 +19,11 @@ export const Newsletter = () => {
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/img/background-newsletter.webp)" }}
+        style={{ backgroundImage: "url(/img/foot.jpg)" }}
       />
 
       {/* Overlay */}
-      <div className="absolute inset-0 bg-indigo-900/90" />
+      <div className="absolute inset-0 bg-stone-500/80" />
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16">
@@ -62,13 +62,13 @@ export const Newsletter = () => {
             </div>
             <button
               type="submit"
-              className="flex-none rounded-lg bg-white px-3.5 py-2.5 text-sm font-semibold text-indigo-600 shadow-sm hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300"
+              className="flex-none rounded-lg bg-white px-3.5 py-2.5 text-sm font-semibold text-gray-600 shadow-sm hover:bg-indigo-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white transition-all duration-300"
             >
               สมัครรับข่าวสาร
             </button>
           </form>
           {status === "success" && (
-            <p className="mt-4 text-sm text-indigo-200">
+            <p className="mt-4 text-sm text-gray-200">
               ขอบคุณที่สมัครรับข่าวสาร! เราจะส่งข้อมูลไปยังอีเมลของคุณเร็วๆ นี้
             </p>
           )}

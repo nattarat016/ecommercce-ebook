@@ -10,7 +10,7 @@ export const FeatureGrid = () => {
         <div className="group p-6 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100">
           <div className="flex flex-col items-center text-center space-y-4">
             <div className="p-3 bg-indigo-50 rounded-xl group-hover:bg-indigo-100 transition-colors">
-              <MdLocalShipping size={32} className="text-indigo-600" />
+              <MdLocalShipping size={32} className="text-stone-600" />
             </div>
             <div className="space-y-2">
               <p className="font-semibold text-gray-900">จัดส่งฟรี</p>

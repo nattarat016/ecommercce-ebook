@@ -48,7 +48,7 @@ export const AboutPage = () => {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-6 h-6 text-stone-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -71,7 +71,7 @@ export const AboutPage = () => {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-6 h-6 text-stone-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -94,7 +94,7 @@ export const AboutPage = () => {
             <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
               <div className="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
                 <svg
-                  className="w-6 h-6 text-indigo-600"
+                  className="w-6 h-6 text-stone-600"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -118,7 +118,7 @@ export const AboutPage = () => {
         </section>
 
         {/* Contact Section */}
-        <section className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl p-8 text-white">
+        <section className="bg-gradient-to-r from-stone-500 to-neutral-600 rounded-2xl p-8 text-white">
           <h2 className="text-3xl font-bold mb-6">ติดต่อเรา</h2>
           <div className="space-y-4">
             <p className="flex items-center">

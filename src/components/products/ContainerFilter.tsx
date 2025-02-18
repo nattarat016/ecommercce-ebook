@@ -1,12 +1,15 @@
 import { Separator } from "../shared/Separator";
 
 const availableBrands = [
-  "Samsung",
-  "Apple",
-  "Huawei",
-  "Xiaomi",
-  "Realme",
-  "Honor",
+  "Fiction",
+  "Business & Finance",
+  "Health & Fitness",
+  "Education",
+  "Technology",
+  "Travel",
+  "Cookbooks",
+  "Design & Art",
+  "Children & Young Adult",
 ];
 
 interface Props {
@@ -31,7 +34,7 @@ export const ContainerFilter = ({ onBrandSelect, selectedBrand }: Props) => {
       <Separator />
 
       <div className="flex flex-col gap-3">
-        <h3 className="text-lg font-medium text-black">แบรนด์</h3>
+        <h3 className="text-lg font-medium text-black">Category</h3>
 
         <div className="flex flex-col gap-2">
           {availableBrands.map((brand) => (

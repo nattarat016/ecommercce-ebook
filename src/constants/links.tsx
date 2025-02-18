@@ -14,7 +14,7 @@ export const navbarLinks = [
 	},
 	{
 		id: 2,
-    title: "โทรศัพท์มือถือ",
+    title: "หนังสือ",
     href: "/celulares",
 	},
 	{

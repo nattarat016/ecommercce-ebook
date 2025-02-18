@@ -139,7 +139,7 @@ export const Navbar = () => {
             <div className="flex-shrink-0 flex items-center">
               <Link
                 to="/"
-                className="text-2xl font-bold bg-gradient-to-r from-indigo-500 to-purple-600 bg-clip-text text-transparent hover:from-indigo-600 hover:to-purple-700 transition-all"
+                className="text-2xl font-bold bg-gradient-to-r from-stone-500 to-gray-900 bg-clip-text text-transparent hover:from-stone-600 hover:to-gray-700 transition-all"
               >
                 Libria
               </Link>
@@ -152,8 +152,8 @@ export const Navbar = () => {
                   className={({ isActive }) =>
                     `inline-flex items-center px-3 py-1 text-sm font-medium transition-all duration-200  ${
                       isActive
-                        ? " text-indigo-600"
-                        : "text-gray-500 hover:text-indigo-600 "
+                        ? " text-stone-600"
+                        : "text-gray-500 hover:text-stone-600 "
                     }`
                   }
                 >
@@ -164,7 +164,7 @@ export const Navbar = () => {
               {isAdmin && (
                 <NavLink
                   to="/admin"
-                  className="inline-flex items-center px-3 py-1 text-sm font-medium transition-all duration-200 text-indigo-600 hover:text-indigo-800"
+                  className="inline-flex items-center px-3 py-1 text-sm font-medium transition-all duration-200 text-stone-600 hover:text-stone-800"
                 >
                   <span className="ml-2">แดชบอร์ด</span>
                 </NavLink>
@@ -176,7 +176,7 @@ export const Navbar = () => {
             <div ref={searchRef} className="relative">
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all"
+                className="p-2 text-gray-400 hover:text-stone-600 hover:bg-indigo-50 rounded-full transition-all"
               >
                 <BiSearch className="h-5 w-5" />
               </button>
@@ -198,11 +198,11 @@ export const Navbar = () => {
 
             <Link
               to="/cart"
-              className="relative p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all"
+              className="relative p-2 text-gray-400 hover:text-stone-600 hover:bg-indigo-50 rounded-full transition-all"
             >
               <BiCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-indigo-600 rounded-full">
+                <span className="absolute -top-1 -right-1 inline-flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-stone-600 rounded-full">
                   {cartCount}
                 </span>
               )}
@@ -214,7 +214,7 @@ export const Navbar = () => {
                   onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
                   className="flex items-center space-x-2 p-2 rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <div className="w-8 h-8 bg-indigo-500 rounded-full flex items-center justify-center text-white">
+                  <div className="w-8 h-8 bg-stone-500 rounded-full flex items-center justify-center text-white">
                     {user.email[0].toUpperCase()}
                   </div>
                   <BiChevronDown
@@ -236,7 +236,7 @@ export const Navbar = () => {
                     </Link>
                     <Link
                       to="/orders"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition-all"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-indigo-50 hover:text-stone-600 transition-all"
                       onClick={() => setIsProfileMenuOpen(false)}
                     >
                       <BiHistory className="w-5 h-5 mr-3" />
@@ -269,7 +269,7 @@ export const Navbar = () => {
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="sm:hidden p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-full transition-all"
+              className="sm:hidden p-2 text-gray-400 hover:text-stone-600 hover:bg-indigo-50 rounded-full transition-all"
             >
               <BiMenu className="h-5 w-5" />
             </button>
@@ -288,8 +288,8 @@ export const Navbar = () => {
                 className={({ isActive }) =>
                   `flex items-center px-4 py-2 text-base font-medium transition-all ${
                     isActive
-                      ? "text-indigo-600 bg-indigo-50"
-                      : "text-gray-500 hover:text-indigo-600 hover:bg-indigo-50"
+                      ? "text-stone-600 bg-indigo-50"
+                      : "text-gray-500 hover:text-stone-600 hover:bg-indigo-50"
                   }`
                 }
                 onClick={() => setIsMenuOpen(false)}
@@ -301,7 +301,7 @@ export const Navbar = () => {
             {isAdmin && (
               <NavLink
                 to="/admin"
-                className="flex items-center px-4 py-2 text-base font-medium transition-all text-indigo-600 hover:text-indigo-800"
+                className="flex items-center px-4 py-2 text-base font-medium transition-all text-stone-600 hover:text-stone-800"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <span className="ml-3">แดชบอร์ด</span>

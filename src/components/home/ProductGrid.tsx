@@ -14,7 +14,7 @@ export const ProductGrid = ({ title, products }: ProductGridProps) => {
           <h2 className="text-3xl font-bold text-gray-900 sm:text-4xl">
             {title}
           </h2>
-          <div className="mt-4 mx-auto w-24 h-1 bg-indigo-600 rounded-full"></div>
+          <div className="mt-4 mx-auto w-24 h-1 bg-stone-600 rounded-full"></div>
         </div>
 
         <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">

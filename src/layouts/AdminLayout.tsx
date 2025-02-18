@@ -151,7 +151,7 @@ export const AdminLayout = () => {
             </button>
 
             <div className="flex items-center">
-              <span className="px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+              <span className="px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-stone-800">
                 ผู้ดูแลระบบ
               </span>
             </div>

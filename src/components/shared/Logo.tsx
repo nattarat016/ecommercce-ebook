@@ -7,7 +7,7 @@ export const Logo = () => {
 			className={`text-2xl font-bold tracking-tighter transition-all`}
 		>
 			<p className='hidden lg:block'>
-				MeowwwMobile
+				Libria
 				<span className='text-cyan-600'>Shop</span>
 			</p>
 
