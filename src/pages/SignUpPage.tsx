@@ -2,15 +2,26 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth.service";
 import { showToast } from "../utils/toast";
-import { supabase } from "../lib/supabase";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    email: "",
+    username: "",
+    password: "",
+    confirmPassword: "",
+    age: "",
+  });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +29,9 @@ export const SignUpPage = () => {
     setLoading(true);
 
     try {
-      if (!email || !password || !confirmPassword) {
+      const { email, username, password, confirmPassword, age } = formData;
+
+      if (!email || !password || !confirmPassword || !username || !age) {
         setError("กรุณากรอกข้อมูลให้ครบถ้วน");
         showToast.error("กรุณากรอกข้อมูลให้ครบถ้วน");
         return;
@@ -36,26 +49,25 @@ export const SignUpPage = () => {
         return;
       }
 
-      const { user } = await authService.signUp(email, password, "");
+      const { user } = await authService.signUp(
+        email,
+        password,
+        username,
+        parseInt(age)
+      );
 
       if (user) {
-        const { error } = await supabase.from("Users").insert([{ user_id: user.id }]);
-        if (error) {
-          console.error("Insert user error:", error);
-          setError(error.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
-          showToast.error("เกิดข้อผิดพลาดในการสมัครสมาชิก");
-        }
         showToast.success("ลงทะเบียนสำเร็จ");
         navigate("/signin", {
           state: {
-            message: "ลงทะเบียนสำเร็จ",
+            message: "ลงทะเบียนสำเร็จ กรุณาเข้าสู่ระบบ",
           },
         });
       }
     } catch (err: any) {
       console.error("Sign up error:", err);
       setError(err.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
-      showToast.error("เกิดข้อผิดพลาดในการสมัครสมาชิก");
+      showToast.error(err.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
     } finally {
       setLoading(false);
     }
@@ -99,8 +111,39 @@ export const SignUpPage = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="อีเมล"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="username" className="sr-only">
+                ชื่อผู้ใช้
+              </label>
+              <input
+                id="username"
+                name="username"
+                type="text"
+                autoComplete="username"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="ชื่อผู้ใช้"
+                value={formData.username}
+                onChange={handleChange}
+              />
+            </div>
+            <div>
+              <label htmlFor="age" className="sr-only">
+                อายุ
+              </label>
+              <input
+                id="age"
+                name="age"
+                type="number"
+                required
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="อายุ"
+                value={formData.age}
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -115,8 +158,8 @@ export const SignUpPage = () => {
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="รหัสผ่าน"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={formData.password}
+                onChange={handleChange}
               />
             </div>
             <div>
@@ -125,14 +168,14 @@ export const SignUpPage = () => {
               </label>
               <input
                 id="confirm-password"
-                name="confirm-password"
+                name="confirmPassword"
                 type="password"
                 autoComplete="new-password"
                 required
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="ยืนยันรหัสผ่าน"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
+                value={formData.confirmPassword}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -141,9 +184,9 @@ export const SignUpPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
+              {loading ? "กำลังดำเนินการ..." : "สมัครสมาชิก"}
             </button>
           </div>
         </form>
