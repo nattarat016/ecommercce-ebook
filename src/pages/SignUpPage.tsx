@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth.service";
 import { showToast } from "../utils/toast";
+import { supabase } from "../lib/supabase";
 
 export const SignUpPage = () => {
   const navigate = useNavigate();
@@ -38,6 +39,12 @@ export const SignUpPage = () => {
       const { user } = await authService.signUp(email, password, "");
 
       if (user) {
+        const { error } = await supabase.from("Users").insert([{ user_id: user.id }]);
+        if (error) {
+          console.error("Insert user error:", error);
+          setError(error.message || "เกิดข้อผิดพลาดในการสมัครสมาชิก");
+          showToast.error("เกิดข้อผิดพลาดในการสมัครสมาชิก");
+        }
         showToast.success("ลงทะเบียนสำเร็จ");
         navigate("/signin", {
           state: {

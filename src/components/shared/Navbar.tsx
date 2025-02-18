@@ -30,17 +30,17 @@ export const Navbar = () => {
   const searchRef = useRef<HTMLDivElement>(null);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  const updateCartCount = async (userId?: string) => {
-    if (userId) {
-      // ถ้าล็อกอิน ดึงจำนวนสินค้าจาก server
-      const cartItems = await cartService.getCartItems(userId);
-      setCartCount(cartItems.length);
-    } else {
-      // ถ้าไม่ล็อกอิน ดึงจำนวนสินค้าจาก local storage
-      const localItems = localStorage.getItem("cartItems");
-      setCartCount(localItems ? JSON.parse(localItems).length : 0);
-    }
-  };
+  // const updateCartCount = async (userId?: string) => {
+  //   if (userId) {
+  //     // ถ้าล็อกอิน ดึงจำนวนสินค้าจาก server
+  //     const cartItems = await cartService.getCartItems(userId);
+  //     setCartCount(cartItems.length);
+  //   } else {
+  //     // ถ้าไม่ล็อกอิน ดึงจำนวนสินค้าจาก local storage
+  //     const localItems = localStorage.getItem("cartItems");
+  //     setCartCount(localItems ? JSON.parse(localItems).length : 0);
+  //   }
+  // };
 
   useEffect(() => {
     // const checkAuth = async () => {
@@ -60,20 +60,20 @@ export const Navbar = () => {
     const { data: authListener } = authService.onAuthStateChange(
       async (_event, session) => {
         setUser(session?.user);
-        if (session?.user) {
-          updateCartCount(session.user.id);
-          // const adminStatus = await authService.isAdmin(session.user.id);
-          // setIsAdmin(adminStatus);
-        } else {
-          updateCartCount();
-        }
+        // if (session?.user) {
+        //   updateCartCount(session.user.id);
+        //   // const adminStatus = await authService.isAdmin(session.user.id);
+        //   // setIsAdmin(adminStatus);
+        // } else {
+        //   updateCartCount();
+        // }
       }
     );
 
     // ตรวจสอบการเปลี่ยนแปลงของ local cart
     const checkLocalCart = () => {
       if (!user) {
-        updateCartCount();
+        // updateCartCount();
       }
     };
 
