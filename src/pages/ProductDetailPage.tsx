@@ -146,7 +146,7 @@ export const ProductDetailPage = () => {
                 {typeof product.description === "string"
                   ? product.description
                   : product.description?.content?.[0]?.content?.[0]?.text ||
-                    "ไม่มีคำอธิบายสินค้า"}
+                    "ไม่มีคำอธิบายสินค้าครับ"}
               </div>
             </div>
 
