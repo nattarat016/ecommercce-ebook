@@ -28,6 +28,7 @@ export const ProductDetailPage = () => {
 
   const loadProduct = async () => {
     try {
+      console.log("Loading product:", slug);
       const { data, error } = await supabase
         .from("Ebooks")
         .select(

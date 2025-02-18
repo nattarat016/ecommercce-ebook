@@ -13,6 +13,7 @@ import {
   BiLogOut,
   BiHistory,
   BiUserCircle,
+  BiBook,
 } from "react-icons/bi";
 import { authService } from "../../services/auth.service";
 import { cartService } from "../../services/cart.service";

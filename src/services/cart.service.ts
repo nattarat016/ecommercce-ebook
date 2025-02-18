@@ -21,6 +21,8 @@ export const cartService = {
             if (!supabase) {
                 throw new Error('Supabase client not initialized');
             }
+            console.log('Fetching cart for user:', userId);
+            
 
             const { data: existingCart, error: fetchError } = await supabase
                 .from('Orders')
