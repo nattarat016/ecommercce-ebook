@@ -26,7 +26,7 @@ export const AboutPage = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">เราคือใคร</h2>
           <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
             <p className="text-gray-600 leading-relaxed mb-6">
-              Libria เป็นร้านค้าออนไลน์ที่จำหน่ายโทรศัพท์มือถือ
+              Libria เป็นร้านค้าออนไลน์ที่จำหน่ายหนังสืออิเล็กทรอนิกส์
               ก่อตั้งขึ้นในปี 2021
               ด้วยเป้าหมายที่จะมอบสินค้าคุณภาพดีในราคาที่เหมาะสมให้กับลูกค้าของเรา
               เรามีทีมงานมืออาชีพที่คอยคัดสรรผลิตภัณฑ์ที่ดีที่สุดสำหรับคุณ
