@@ -59,24 +59,13 @@ export const CellPhonesPage = () => {
             {products.map((product) => (
               <CardProduct
                 key={product.id}
-                name={product.name}
+                title={product.title}
                 price={product.price}
-                colors={(product.colors || []).map((color) => ({
-                  name: color.color_name,
-                  color: color.color,
-                }))}
-                img={product.images?.[0] || ""}
-                slug={product.slug}
-                variants={product.variants || []}
+                img={product.cover_url || ""}
               />
             ))}
           </div>
 
-          {products.length === 0 && (
-            <div className="text-center text-gray-500">
-              ไม่พบสินค้าที่คุณค้นหา
-            </div>
-          )}
         </div>
       </div>
     </>

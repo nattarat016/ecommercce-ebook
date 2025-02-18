@@ -25,12 +25,8 @@ export const ProductGrid = ({ title, products }: ProductGridProps) => {
             >
               <CardProduct
                 img={product.cover_url || "https://via.placeholder.com/400"}
-                name={product.title}
+                title={product.title}
                 price={product.price}
-                colors={(product.colors || []).map((color) => ({
-                  name: color.color_name,
-                  color: color.color,
-                }))}
               />
             </div>
           ))}

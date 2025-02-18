@@ -89,13 +89,14 @@ export const authService = {
     // เช็คว่าผู้ใช้เป็น admin หรือไม่
     isAdmin: async (userId: string): Promise<boolean> => {
         const { data, error } = await supabase
-            .from('profiles')
-            .select('is_admin')
+            .from('Users')
+            .select('role')
             .eq('user_id', userId)
             .single();
 
         if (error) throw error;
-        return data?.is_admin || false;
+
+        return data?.role == 'admin' || false;
     },
 
     // ดึงข้อมูล session ปัจจุบัน

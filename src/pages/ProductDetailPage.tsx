@@ -174,25 +174,9 @@ export const ProductDetailPage = () => {
               </button>
 
             </div>
-
-            {/* คุณสมบัติเด่น */}
-            <div className="mt-10">
-              <h3 className="text-sm font-medium text-gray-900">
-                คุณสมบัติเด่น
-              </h3>
-              <div className="mt-4">
-                <ul className="pl-4 list-disc text-sm space-y-2">
-                  {(product.features || []).map((feature: string) => (
-                    <li key={feature} className="text-gray-600">
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
   );
 };
