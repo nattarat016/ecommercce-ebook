@@ -37,7 +37,7 @@ export const OrderSuccessPage = () => {
           </Link> */}
           <Link
             to="/"
-            className="block w-full bg-white text-indigo-600 py-3 px-4 rounded-md border border-indigo-600 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            className="block w-full bg-white text-emerald-500 py-3 px-4 rounded-md border border-rose-600 hover:bg-indigo-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500"
           >
             กลับสู่หน้าแรก
           </Link>

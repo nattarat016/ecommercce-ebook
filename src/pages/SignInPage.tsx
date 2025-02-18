@@ -50,7 +50,7 @@ export const SignInPage = () => {
             หรือ{" "}
             <Link
               to="/signup"
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200 hover:underline"
+              className="font-medium text-emerald-600 hover:text-emerald-500 transition-colors duration-200 hover:underline"
             >
               สมัครสมาชิกใหม่
             </Link>
@@ -80,7 +80,7 @@ export const SignInPage = () => {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
                 placeholder="กรอกอีเมลของคุณ"
               />
             </div>
@@ -99,7 +99,7 @@ export const SignInPage = () => {
                 required
                 value={formData.password}
                 onChange={handleChange}
-                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
                 placeholder="กรอกรหัสผ่านของคุณ"
               />
             </div>
@@ -109,7 +109,7 @@ export const SignInPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:bg-indigo-400 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
+              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 disabled:bg-emerald-400 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
             >
               {loading ? (
                 <span className="flex items-center">

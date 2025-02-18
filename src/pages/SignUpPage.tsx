@@ -84,7 +84,7 @@ export const SignUpPage = () => {
             หรือ{" "}
             <button
               onClick={() => navigate("/signin")}
-              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200 hover:underline"
+              className="font-medium text-emerald-600 hover:text-emerald-500 transition-colors duration-200 hover:underline"
             >
               เข้าสู่ระบบ
             </button>
@@ -157,7 +157,7 @@ export const SignUpPage = () => {
                   type={field.type}
                   autoComplete={field.autoComplete}
                   required
-                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
+                  className="appearance-none relative block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent focus:z-10 sm:text-sm transition-all duration-300 focus:translate-x-1 bg-white/50 backdrop-blur-sm"
                   placeholder={field.placeholder}
                   value={formData[field.name as keyof typeof formData]}
                   onChange={handleChange}
@@ -170,7 +170,7 @@ export const SignUpPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
+              className="group relative w-full flex justify-center py-2.5 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-emerald-600 hover:bg-emerald-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 transform transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] disabled:hover:scale-100 shadow-md hover:shadow-lg"
             >
               {loading ? (
                 <span className="flex items-center">

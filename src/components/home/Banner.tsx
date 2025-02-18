@@ -24,7 +24,7 @@ export const Banner = () => {
 
 				<Link
           to="/celulares"
-          className="bg-zinc-400 hover:bg-zinc-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out"
+          className="bg-rose-400 hover:bg-emerald-600 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition duration-300 ease-in-out"
 				>
           ดู E-Book
 				</Link>

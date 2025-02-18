@@ -62,7 +62,7 @@ export const Footer = () => {
                 placeholder="อีเมลของคุณ"
                 className="flex-1 bg-gray-800 text-white px-4 py-2 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
-              <button className="bg-gray-600 text-white px-4 py-2 rounded-r-lg hover:bg-stone-400 transition-colors">
+              <button className="bg-emerald-600 text-white px-4 py-2 rounded-r-lg hover:bg-rose-400 transition-colors">
                 <BiChevronRight size={20} />
               </button>
             </div>
@@ -78,7 +78,7 @@ export const Footer = () => {
                   href={link.href}
                   target="_blank"
                   rel="noreferrer"
-                  className="bg-gray-800 p-2 rounded-lg text-gray-400 hover:bg-stone-600 hover:text-white transition-all duration-300"
+                  className="bg-gray-800 p-2 rounded-lg text-gray-400 hover:bg-emerald-600 hover:text-white transition-all duration-300"
                 >
                   {link.icon}
                 </a>

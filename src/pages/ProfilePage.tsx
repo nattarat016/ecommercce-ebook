@@ -47,7 +47,7 @@ export default function ProfilePage() {
       {/* Profile Header */}
       <div className="bg-white rounded-xl shadow-sm p-6 mb-8">
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+          <div className="w-20 h-20 bg-gradient-to-r from-emerald-500 to-rose-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
             {user?.email?.[0].toUpperCase()}
           </div>
           <div className="flex-1">
@@ -80,7 +80,7 @@ export default function ProfilePage() {
                 className="flex items-center gap-4 p-4 rounded-lg border border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 <div className="p-3 bg-indigo-50 rounded-full">
-                  <BiPackage className="w-6 h-6 text-indigo-600" />
+                  <BiPackage className="w-6 h-6 text-emerald-600" />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
@@ -93,7 +93,7 @@ export default function ProfilePage() {
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="font-medium text-indigo-600">
+                      <p className="font-medium text-emerald-600">
                         {formatPrice(order.total)}
                       </p>
                       <span

@@ -55,7 +55,7 @@ export const CartPage = () => {
   if (loading) {
     return (
       <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-rose-600"></div>
       </div>
     );
   }
@@ -72,7 +72,7 @@ export const CartPage = () => {
           </div>
           <Link
             to="/celulares"
-            className="flex items-center text-indigo-600 hover:text-indigo-800"
+            className="flex items-center text-emerald-600 hover:text-emerald-800"
           >
             <BiArrowBack className="mr-2" />
             เลือกซื้อสินค้าต่อ
@@ -84,7 +84,7 @@ export const CartPage = () => {
             <div className="text-gray-500 mb-4">ไม่มีสินค้าในตะกร้า</div>
             <Link
               to="/celulares"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-600 hover:bg-rose-700"
             >
               เลือกซื้อสินค้า
             </Link>
@@ -183,7 +183,7 @@ export const CartPage = () => {
                 <div className="space-y-4">
                   <Link
                     to="/checkout"
-                    className="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+                    className="w-full flex justify-center items-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-emerald-600 hover:bg-emerald-700"
                   >
                     ดำเนินการชำระเงิน
                   </Link>
