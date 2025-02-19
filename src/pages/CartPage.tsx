@@ -29,6 +29,8 @@ export const CartPage = () => {
       }
       const items = await cartService.getCartItems(user.id);
       setCartItems(items);
+      const totalPrice = await cartService.getCartTotal(user.id);
+      cartService.setCartTotal(totalPrice, user.id);
     } catch (err: any) {
       showToast.error(err.message);
     } finally {
@@ -46,10 +48,12 @@ export const CartPage = () => {
   };
 
   const calculateTotal = () => {
-    return cartItems.reduce((sum, item) => {
+
+   const total_price = cartItems.reduce((sum, item) => {
       const price = item.Ebooks?.price || 0;
       return sum + price;
     }, 0);
+    return total_price;
   };
 
   if (loading) {

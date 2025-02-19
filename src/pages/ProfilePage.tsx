@@ -94,7 +94,7 @@ export default function ProfilePage() {
                     </div>
                     <div className="text-right">
                       <p className="font-medium text-emerald-600">
-                        {formatPrice(order.total)}
+                        {formatPrice(order.total_price)}
                       </p>
                       <span
                         className={`inline-block px-2 py-1 text-xs rounded-full ${

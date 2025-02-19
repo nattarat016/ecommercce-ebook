@@ -95,7 +95,7 @@ export const CheckoutPage = () => {
       // });
 
       // Clear cart after successful order
-      // await cartService.clearCart(user.id);
+      await cartService.clearCart(user.id);
 
       // Redirect to order confirmation page
       navigate("/order-success");

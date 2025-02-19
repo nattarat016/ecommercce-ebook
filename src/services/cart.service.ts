@@ -109,6 +109,8 @@ export const cartService = {
                         ebook_id: productId,
                     });
 
+                
+
                 if (error) throw error;
             }
         } catch (error) {
@@ -143,7 +145,7 @@ export const cartService = {
         const { error } = await supabase
             .from('Order_Items')
             .delete()
-            .eq('cart_id', cartId);
+            .eq('order_id', cartId);
 
         if (error) throw error;
     },
@@ -159,18 +161,28 @@ export const cartService = {
     },
 
     getCartTotal: async (userId: string): Promise<number> => {
+        const cartId = await cartService.getOrCreateCart(userId);
         const { data, error } = await supabase
             .from('Order_Items')
-            .select(`
-                Ebooks (price)
+            .select(`*,
+                Ebooks : ebook_id (price)
             `)
-            .eq('user_id', userId);
+            .eq('order_id', cartId);
 
         if (error) throw error;
+console.log("data",data[0].Ebooks);
 
         return data.reduce((total, item) => {
-            const price = item.Ebooks?.[0]?.price || 0;
+            const price = item.Ebooks.price || 0;
             return total + price;
         }, 0);
+    },
+
+    setCartTotal: async (total: number, userId: string): Promise<void> => {
+        const { error } = await supabase.from('Orders').update({
+            total_price: total,
+        }).eq('user_id', userId);
+        
+        if (error) throw error;
     }
 };
