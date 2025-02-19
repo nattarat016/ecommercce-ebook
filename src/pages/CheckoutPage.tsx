@@ -208,7 +208,7 @@ export const CheckoutPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
               <h2 className="text-xl font-semibold mb-4">วิธีการชำระเงิน</h2>
               <div className="space-y-4">
-                <label className="flex items-center space-x-3">
+                {/* <label className="flex items-center space-x-3">
                   <input
                     type="radio"
                     name="paymentMethod"
@@ -218,7 +218,7 @@ export const CheckoutPage = () => {
                     className="h-4 w-4 text-indigo-600 focus:ring-indigo-500"
                   />
                   <span>เก็บเงินปลายทาง</span>
-                </label>
+                </label> */}
                 <label className="flex items-center space-x-3">
                   <input
                     type="radio"
