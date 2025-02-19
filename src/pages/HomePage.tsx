@@ -67,11 +67,11 @@ export const HomePage = () => {
           {popularProducts.length > 0 && (
             <ProductGrid title="eBook ยอดนิยม" products={popularProducts} />
           )}
-          <div className="relative h-[700px] rounded-2xl overflow-hidden mb-16">
+          <div className="relative h-[700px]  rounded-2xl overflow-hidden mb-16">
         <img
           src="/img/bannn.webp"
           alt="ภาพพื้นหลัง"
-          className="w-full h-800 object-cover"
+          className="w-full h-full  object-cover"
         />
       </div>
         </>
