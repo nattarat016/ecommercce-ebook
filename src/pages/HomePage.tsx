@@ -14,13 +14,10 @@ export const HomePage = () => {
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        console.log("Fetching products...");
         const [recent, popular] = await Promise.all([
           productService.getAllProducts(),
           productService.getAllProducts(),
         ]);
-        console.log("Recent products:", recent);
-        console.log("Popular products:", popular);
 
         setRecentProducts(recent as Product[]);
         setPopularProducts(popular as Product[]);
