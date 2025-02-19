@@ -14,10 +14,12 @@ export const CellPhonesPage = () => {
       try {
         let data: Product[];
         if (selectedBrand) {
-          data = await productService.filterProductsByBrand(selectedBrand);
+          data = await productService.filterProductsByCategory(selectedBrand);
         } else {
           data = await productService.getAllProducts();
         }
+        console.log("Products:", data);
+        
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error);

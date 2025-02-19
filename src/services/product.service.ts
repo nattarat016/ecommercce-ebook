@@ -136,28 +136,32 @@ export const productService = {
         return data || [];
     },
 
-    // กรองสินค้าตามแบรนด์
-    filterProductsByBrand: async (brand: string): Promise<Product[]> => {
-        const { data, error } = await supabase
-            .from('products')
-            .select(`
-                *,
-                variants:product_variants(
-                    id,
-                    stock,
-                    price,
-                    storage,
-                    color,
-                    color_name
-                )
-            `)
-            .eq('brand', brand);
+    // กรองสินค้าตามหมวดหมู่
+    filterProductsByCategory: async (categoryName: string): Promise<Product[]> => {
+        try {
+            const {data:catId,error} = await supabase
+                .from('Categories').select('id').eq('name', categoryName).single();
+            const { data, error:err } = await supabase
+                .from('Ebooks')
+                .select('*')
+                .eq('category_id', catId?.id);
 
-        if (error) {
+            if (err) {
+                console.error('Error filtering products by category:', error);
+                throw error;
+            }
+
+            if (err) {
+                console.error('Error filtering products by category:', error);
+                throw error;
+            }
+            
+
+            return data || [];
+        } catch (error) {
+            console.error('Error in filterProductsByCategory:', error);
             throw error;
         }
-
-        return data || [];
     },
 
     // Admin Functions
@@ -244,4 +248,4 @@ export const productService = {
             throw error;
         }
     }
-}; 
+};
