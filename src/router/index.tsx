@@ -9,11 +9,7 @@ import { CheckoutPage } from "../pages/CheckoutPage";
 import { OrderSuccessPage } from "../pages/OrderSuccessPage";
 import { OrdersPage } from "../pages/OrdersPage";
 import { AdminLayout } from "../layouts/AdminLayout";
-import AdminProductsPage from "../pages/admin/AdminProductsPage";
-import ProductFormPage from "../pages/admin/ProductFormPage";
-import { DashboardPage } from "../pages/admin/DashboardPage";
 import ProfilePage from "../pages/ProfilePage";
-import { AdminOrdersPage } from "../pages/admin/AdminOrdersPage";
 import { CartPage } from "../pages/CartPage";
 
 export const router = createBrowserRouter([
@@ -75,26 +71,6 @@ export const router = createBrowserRouter([
         path: "admin",
         element: <AdminLayout />,
         children: [
-          {
-            index: true,
-            element: <DashboardPage />,
-          },
-          {
-            path: "orders",
-            element: <AdminOrdersPage />,
-          },
-          {
-            path: "products",
-            element: <AdminProductsPage />,
-          },
-          {
-            path: "products/new",
-            element: <ProductFormPage />,
-          },
-          {
-            path: "products/edit/:id",
-            element: <ProductFormPage />,
-          },
           {
             path: "*",
             element: <ErrorBoundary />,

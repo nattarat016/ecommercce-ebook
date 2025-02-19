@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Brands } from "../components/home/Brands";
 import { FeatureGrid } from "../components/home/FeatureGrid";
 import { ProductGrid } from "../components/home/ProductGrid";
 import { Product } from "../interfaces/product.interface";
@@ -65,7 +64,7 @@ export const HomePage = () => {
           {recentProducts.length > 0 && (
             <ProductGrid title="eBook มาใหม่" products={recentProducts} />
           )}
-          <Brands />
+          {/* <Brands /> */}
           {popularProducts.length > 0 && (
             <ProductGrid title="eBook ยอดนิยม" products={popularProducts} />
           )}

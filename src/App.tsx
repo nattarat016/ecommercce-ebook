@@ -3,10 +3,7 @@ import { ErrorBoundary } from "./components/shared/ErrorBoundary";
 import { Footer } from "./components/shared/Footer";
 import { Navbar } from "./components/shared/Navbar";
 import { AdminLayout } from "./layouts/AdminLayout";
-import { HomePage, AboutPage, CellPhonesPage } from "./pages";
-import { AdminOrdersPage } from "./pages/admin/AdminOrdersPage";
-import AdminProductsPage from "./pages/admin/AdminProductsPage";
-import ProductFormPage from "./pages/admin/ProductFormPage";
+import { HomePage, AboutPage } from "./pages";
 import { CartPage } from "./pages/CartPage";
 import { CheckoutPage } from "./pages/CheckoutPage";
 import { OrdersPage } from "./pages/OrdersPage";
@@ -21,7 +18,7 @@ function App() {
     <BrowserRouter>
       <ToastProvider />
       <div className="min-h-screen flex flex-col bg-gray-50">
-        {/* <Navbar /> */}
+        <Navbar />
         <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
             <Route errorElement={<ErrorBoundary />}>
@@ -37,10 +34,6 @@ function App() {
 
               {/* Admin Routes */}
               <Route path="/admin" element={<AdminLayout />}>
-                <Route path="orders" element={<AdminOrdersPage />} />
-                <Route path="products" element={<AdminProductsPage />} />
-                <Route path="products/new" element={<ProductFormPage />} />
-                <Route path="products/edit/:id" element={<ProductFormPage />} />
               </Route>
             </Route>
           </Routes>

@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { authService } from "../services/auth.service";
 import { cartService, CartItem } from "../services/cart.service";
-import { orderService } from "../services/order.service";
 
 export const CheckoutPage = () => {
   const navigate = useNavigate();

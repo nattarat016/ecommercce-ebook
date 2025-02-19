@@ -8,27 +8,25 @@ import {
   BiMenu,
   BiChevronDown,
   BiHomeAlt,
-  BiPhone,
   BiInfoCircle,
   BiLogOut,
-  BiHistory,
+
   BiUserCircle,
   BiBook,
 } from "react-icons/bi";
 import { authService } from "../../services/auth.service";
-import { cartService } from "../../services/cart.service";
 import { showToast } from "../../utils/toast";
 
 export const Navbar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
-  const [cartCount, setCartCount] = useState(0);
+  const [cartCount, ] = useState(0);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const profileMenuRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAdmin, ] = useState(false);
 
   // const updateCartCount = async (userId?: string) => {
   //   if (userId) {
