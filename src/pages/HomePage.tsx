@@ -4,6 +4,7 @@ import { ProductGrid } from "../components/home/ProductGrid";
 import { Product } from "../interfaces/product.interface";
 import { productService } from "../services/product.service";
 import { showToast } from "../utils/toast";
+import { Link } from "react-router-dom";
 
 export const HomePage = () => {
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
@@ -57,6 +58,7 @@ export const HomePage = () => {
           </p>
         </div>
       ) : (
+        
         <>
           {recentProducts.length > 0 && (
             <ProductGrid title="eBook มาใหม่" products={recentProducts} />
@@ -65,6 +67,13 @@ export const HomePage = () => {
           {popularProducts.length > 0 && (
             <ProductGrid title="eBook ยอดนิยม" products={popularProducts} />
           )}
+          <div className="relative h-[700px] rounded-2xl overflow-hidden mb-16">
+        <img
+          src="/img/bannn.webp"
+          alt="ภาพพื้นหลัง"
+          className="w-full h-800 object-cover"
+        />
+      </div>
         </>
       )}
     </div>
