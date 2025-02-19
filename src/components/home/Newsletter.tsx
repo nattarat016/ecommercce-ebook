@@ -19,7 +19,7 @@ export const Newsletter = () => {
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/img/foot.jpg)" }}
+        style={{ backgroundImage: "url(/img/about.webp)" }}
       />
 
       {/* Overlay */}

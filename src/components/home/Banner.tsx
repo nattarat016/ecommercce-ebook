@@ -6,7 +6,7 @@ export const Banner = () => {
       {/* ภาพพื้นหลัง */}
 			<div
         className="absolute inset-0 bg-cover bg-center opacity-70 h-full"
-        style={{ backgroundImage: "url(/img/BOOKS.jpg)" }}
+        style={{ backgroundImage: "url(/img/file-Wc5q8ejt4yJL1nAF3ioBkv.webp)" }}
 			/>
 
       {/* เลเยอร์ทับ */}

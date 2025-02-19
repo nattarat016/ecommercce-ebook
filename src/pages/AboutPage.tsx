@@ -4,7 +4,7 @@ export const AboutPage = () => {
       {/* Hero Section */}
       <div className="relative h-[400px] rounded-2xl overflow-hidden mb-16">
         <img
-          src="https://plus.unsplash.com/premium_photo-1682716270464-9a91cbbcf3b7?fm=jpg&q=60&w=3000"
+          src="/img/BOOKS.jpg"
           alt="ภาพพื้นหลัง"
           className="w-full h-full object-cover"
         />
