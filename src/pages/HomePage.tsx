@@ -4,7 +4,6 @@ import { ProductGrid } from "../components/home/ProductGrid";
 import { Product } from "../interfaces/product.interface";
 import { productService } from "../services/product.service";
 import { showToast } from "../utils/toast";
-import { Link } from "react-router-dom";
 
 export const HomePage = () => {
   const [recentProducts, setRecentProducts] = useState<Product[]>([]);
